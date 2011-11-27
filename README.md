@@ -1,38 +1,31 @@
-symblog tutorial - Creating a blog in Symfony2
+Tutorial Symblog - Création d'un avec Symfony2
 ==============================================
 
-Overview
+Introduction
 --------
 
-This project is the documentation source for the symblog tutorial located at
-http://tutorial.symblog.co.uk
+Ce projet est la source de la documentation qui se trouve à l'adresse http://keiruaprod.fr/symblog-fr, traduction du tutoriel original [symblog](http://tutorial.symblog.co.uk/)
 
-Full details of this project can be found at the
-[symblog tutorial](http://tutorial.symblog.co.uk) site.
+Les détails complets du projet sont disponibles à l'adresse du [tutorial](http://keiruaprod.fr/symblog-fr).
 
-The first 6 parts are currently available:
+2 parties sont disponibles actuellement :
 
-1. [Symfony2 Configuration and Templating](http://tutorial.symblog.co.uk/docs/configuration-and-templating.html)
-2. [Contact Page: Validators, Forms and Emailing](http://tutorial.symblog.co.uk/docs/validators-and-forms.html)
-3. [The Blog Model: Using Doctrine 2 and Data Fixtures](http://tutorial.symblog.co.uk/docs/doctrine-2-the-blog-model.html)
-4. [The Comments Model: Adding comments, Doctrine Repositories and Migrations](http://tutorial.symblog.co.uk/docs/extending-the-model-blog-comments.html)
-5. [Customising the view: Twig extensions, The sidebar and Assetic](http://tutorial.symblog.co.uk/docs/customising-the-view-more-with-twig.html)
-6. [Testing: Unit and Functional with PHPUnit](http://tutorial.symblog.co.uk/docs/testing-unit-and-functional-phpunit.html)
+1. [Configuration de Symfony2 et utilisation des templates](http://tutorial.symblog.co.uk/docs/configuration-and-templating.html)
+2. [Page de contact : validateurs, formulaires et envoi d’emails.](http://tutorial.symblog.co.uk/docs/validators-and-forms.html)
 
-Demo site
----------
+Les 4 chapitres qui restent arrivent bientôt
 
-The demo site for this project can be found at http://symblog.co.uk
+Site de démo
+------------
+
+Le site de démo de ce projet, non traduit, est disponible à l'adresse http://symblog.co.uk
 
 Symfony2
 --------
 
-symblog is currently under active development and is using Symfony 2.0.3
+symblog est actuellement en cours de développement et utilise Symfony 2.0.3
 
-Contributing
-------------
+Contribuer
+----------
 
-This tutorial is created using [Sphinx](http://sphinx.pocoo.org/). Follow the
-install instructions on their website. When installed run 'make html' in the
-project route to output the tutorial in html format. The generated html files
-will be placed in _build
+Ce tutoriel a été créé à l'aide de [Sphinx](http://sphinx.pocoo.org/). Suivez les instructions d'installation sur leur site web. Une fois installé, lancez la commande 'make html' à la racine du projet pour obtenir une version HTML du tutoriel. Les fichiers générés sont placés dans le dossier _build.

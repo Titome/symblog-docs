@@ -1,111 +1,82 @@
-Creating a blog in Symfony2
-===========================
+Création d'un blog avec Symfony2
+================================
 
 Introduction
 ------------
 
-This tutorial will guide you through the process of creating a full featured
-blogging website using `Symfony2 <http://symfony.com/>`_. The Standard
-Distribution of the Symfony2 framework will be used, which includes the main
-components you will need when building your own websites. The tutorial is split
-into a number of parts, each part covering different aspects of Symfony2 and its
-components. This tutorial is aimed to be worked through similar to the
-symfony 1 `Jobeet <http://www.symfony-project.org/jobeet/1_4/Doctrine/en/>`_
-tutorial.
+Ce tutoriel va vous guider dans le processus de création d’un blog complet avec `Symfony2 <http://symfony.com/>`_. La distribution standard du framework sera utilisée, qui inclut les principaux composants nécessaires à la création de vos propres sites web. Le tutoriel est découpé en plusieurs parties, qui couvrent chacune des aspects différents de Symfony2 et de ses composants. Il est prévu pour être utilisé de la même manière que `Jobeet <http://www.symfony-project.org/jobeet/1_4/Doctrine/en/>`_ pour Symfony 1.
 
-Tutorial Parts
-~~~~~~~~~~~~~~
+
+Chapitres du tutoriel
+~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
     :maxdepth: 1
 
-    docs/configuration-and-templating
-    docs/validators-and-forms
-    docs/doctrine-2-the-blog-model
-    docs/extending-the-model-blog-comments
-    docs/customising-the-view-more-with-twig
-    docs/testing-unit-and-functional-phpunit
+    docs/configuration-et-templates
+    docs/validateurs-et-formulaires
 
-Demo Website
-------------
+Site démo
+---------
 
-The symblog website can be viewed at
-`http://symblog.co.uk <http://symblog.co.uk/>`_. The source code is
-available via `Github <https://github.com/dsyph3r/symblog>`_. It follows
-along with each part of the tutorial
 
-Coverage
+Le site original de Symblog peut être vu à l’adresse `http://symblog.co.uk <http://symblog.co.uk/>`_. Le code source est disponible sur `Github <https://github.com/dsyph3r/symblog>`_. Il suit chaque partie du tutoriel.
+
+
+Contenu
 --------
 
-This tutorial aims to cover the common tasks you are faced with when creating
-websites using Symfony2.
+Le but de ce tutoriel est de couvrir les tâches que vous allez régulièrement être amené à réaliser lors de la création d’un site web avec Symfony2.
 
-    1.  Bundles
-    2.  Controllers
-    3.  Templating (Using TWIG)
-    4.  Model - Doctrine 2
-    5.  Migrations
-    6.  Data Fixtures
-    7.  Validators
-    8.  Forms
-    9.  Routing
-    10. Asset Management
-    11. Emailing
-    12. Environments
-    13. Customising Error pages
-    14. Security
-    15. The User & Sessions
-    16. CRUD Generation
-    17. Caching
-    18. Testing
-    19. Deployment
+    1.  Les bundles
+    2.  Les controlleurs
+    3.  Les templates (avec Twig)
+    4.  Le modèle - Doctrine 2
+    5.  Les migrations
+    6.  Les données factices
+    7.  Les validateurrs
+    8.  Les formulaires
+    9.  Le routage
+    10. Gestion des fichiers externes
+    11. Les emails
+    12. les environnements
+    13. Personnalisation des pages d'erreur
+    14. La securité
+    15. L'utilisateur et les sessions
+    16. Generation de CRUD
+    17. Le cache
+    18. Les tests
+    19. Le deploiement
 
-Symfony2 is highly customisable and provides a number of different ways to
-perform the same task. Some examples of this include writing configuration
-options in YAML, XML, PHP, or Annotation, and creating templates using Twig or
-PHP. To keep this tutorial simple we will use YAML and Annotations for
-configuration and Twig for templating. The
-`Symfony book <http://symfony.com/doc/current/book/index.html>`_
-provides a great resource for examples of how to use the other methods.
-If other people would like to contribute to the completion of alternative methods
-simply fork the repository on `Github <https://github.com/dsyph3r/symblog-docs>`_
-and send over the pull requests :)
+Symfony2 est fortement personnalisable et propose différentes manières de réaliser un même tâche. On peut citer par exemple le format de configuration qui peut être le YAML, le XML, le PHP ou les annotations, ainsi que la création de template en PHP ou à l’aide de Twig. Par souci de simplicité, nous utiliserons le format YAML et les annotations pour la configuration, et Twig pour les templates. Le `livre Symfony <http://symfony.com/doc/current/book/index.html>`_ propose de nombreux exemples de l’utilisation des autres méthodes. Si d’autres personnes souhaitent contribuer à compléter des méthodes alternatives, n’hésitez pas à faire un fork du projet sur `Github <https://github.com/dsyph3r/symblog-docs>`_ puis proposer un pull :)
 
-Translations
+Traductions
 ------------
 
-Spanish
+Espagnol
+~~~~~~~~
+
+Symblog a été traduit en `espagnol <http://udelabs.com/symfony/symblog/index.html>`_ grâce à `Lisper <https://twitter.com/#!/esymfony>`_.
+
+Français
 ~~~~~~~
 
-Symblog has been translated into `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
-`Lisper <https://twitter.com/#!/esymfony>`_.
+La version de Symblog que vous lisez actuellement a été traduite en `français <http://keiruaprod.fr/blog/symblog/>`_ grâce à `Keirua <https://twitter.com/#!/clemkeirua>`_.
 
-
-Author
+Auteur
 ------
 
-This tutorial is being created by `dsyph3r <http://twitter.com/#!/dsyph3r>`_.
+Ce tutoriel a été originalement écrit par `dsyph3r <http://twitter.com/#!/dsyph3r>`_.
 
-Contributing
+Participer
 ------------
 
-The `source <https://github.com/dsyph3r/symblog-docs>`_ for this tutorial is available on
-Github. If you would like to improve and extend this tutorial simply fork the
-project and send over the pull requests. You can also raise issues using the
-`GitHub Issue Tracker <https://github.com/dsyph3r/symblog-docs/issues>`_. If any
-one is interested in creating a much more visually pleasing design please get in
-`touch <http://twitter.com/#!/dsyph3r>`_!
+La source de ce tutoriel est disponible sur Github en `anglais <https://github.com/dsyph3r/symblog-docs>`_ et `en français <https://github.com/Keirua/symblog-docs>`_. Si vous voulez améliorer et étendre ce tutoriel, vous pouvez faire un fork du projet et proposer un pull. Vous pouvez également rapporter les problèmes via le `gestionnaire de problèmes <https://github.com/dsyph3r/symblog-docs/issues>`_ de Github. Si vous êtes intéressé par la création d’un design plus joli, n’hésitez pas à contacter `l’auteur original <http://twitter.com/#%21/dsyph3r>`_!
 
 Credits
 -------
 
-Special thanks to all the contributors of the
-`Official Symfony2 documentation <http://symfony.com/doc/current/>`_. This
-provided an invaluable resource of information.
+Remerciement particulier aux contributeurs de la `documentation officielle de Symfony2  <http://symfony.com/doc/current/>`_., qui a été une source inestimable d’information.
 
-Flag Icons sourced from `famfamfam <http://www.famfamfam.com/lab/icons/flags/>`_.
+Les icones proviennent de `famfamfam <http://www.famfamfam.com/lab/icons/flags/>`_.
 
-Searching
----------
-
-Looking for a specific topic? Use the :ref:`search`.
