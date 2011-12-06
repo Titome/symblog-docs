@@ -15,12 +15,16 @@ Chapitres du tutoriel
 
     docs/configuration-et-templates
     docs/validateurs-et-formulaires
+    docs/doctrine-2-et-les-articles
+    docs/maj-des-articles-ajout-de-commentaires
+    docs/personnalisation-de-la-vue-twig-avance
+    
 
 Site démo
 ---------
 
 
-Le site original de Symblog peut être vu à l’adresse `http://symblog.co.uk <http://symblog.co.uk/>`_. Le code source est disponible sur `Github <https://github.com/dsyph3r/symblog>`_. Il suit chaque partie du tutoriel.
+Le site original de Symblog se trouve à l’adresse : `http://symblog.co.uk <http://symblog.co.uk/>`_. Le code source est disponible sur `Github <https://github.com/dsyph3r/symblog>`_. Il suit chaque partie du tutoriel.
 
 
 Contenu
@@ -71,7 +75,7 @@ Ce tutoriel a été originalement écrit par `dsyph3r <http://twitter.com/#!/dsy
 Participer
 ------------
 
-La source de ce tutoriel est disponible sur Github en `anglais <https://github.com/dsyph3r/symblog-docs>`_ et `en français <https://github.com/Keirua/symblog-docs>`_. Si vous voulez améliorer et étendre ce tutoriel, vous pouvez faire un fork du projet et proposer un pull. Vous pouvez également rapporter les problèmes via le `gestionnaire de problèmes <https://github.com/dsyph3r/symblog-docs/issues>`_ de Github. Si vous êtes intéressé par la création d’un design plus joli, n’hésitez pas à contacter `l’auteur original <http://twitter.com/#%21/dsyph3r>`_!
+La  de ce tutoriel est disponible sur Github, en `français <https://github.com/Keirua/symblog-docs>`_ et en `anglais <https://github.com/dsyph3r/symblog-docs>`_. Si vous voulez améliorer et étendre ce tutoriel, vous pouvez faire un fork du projet et proposer un pull. Vous pouvez également rapporter les problèmes via le `gestionnaire de problèmes <https://github.com/dsyph3r/symblog-docs/issues>`_ de Github. Si quelqu’un est intéressé par la création d’un design plus joli, qu’il n’hésite pas à contacter `l’auteur original <http://twitter.com/#%21/dsyph3r>`_!
 
 Credits
 -------

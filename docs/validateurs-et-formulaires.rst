@@ -160,8 +160,7 @@ Comme vous pouvez le voir cette classe définit simplement quelques membres prot
 
 .. note::
 
-    Faisons une petite digression pour parler de l'utilisation des espaces de nom dans Symfony2. La classe d'entité que nous avons créé définit pour espace de nom ``Blogger\BlogBundle\Entity``. Comme le chargement automatique de Symfony2 supporte le `standard PSR-0 <http://groups.google.com/group/php-standards/web/psr-0-final-proposal?pli=1>`_,
-	l'espace de nom reflète directement la structure de répertoires du bundle. La classe d'entité ``Enquiry`` est située dans ``src/Blogger/BlogBundle/Entity/Enquiry.php``, ce qui permet à Symfony2 de pouvoir correctement charger automatiquement cette classe.
+    Faisons une petite digression pour parler de l'utilisation des espaces de nom dans Symfony2. La classe d'entité que nous avons créé définit pour espace de nom ``Blogger\BlogBundle\Entity``. Comme le chargement automatique de Symfony2 supporte le `standard PSR-0 <http://groups.google.com/group/php-standards/web/psr-0-final-proposal?pli=1>`_, l'espace de nom reflète directement la structure de répertoires du bundle. La classe d'entité ``Enquiry`` est située dans ``src/Blogger/BlogBundle/Entity/Enquiry.php``, ce qui permet à Symfony2 de pouvoir correctement charger automatiquement cette classe.
 
     Comment le chargeur automatique de Symfony2 sait que l'espace de nom ``Blogger`` se trouve dans le répertoire ``src`` ?
     C'est grâce à la configuration du chargement automatique dans ``app/autoloader.php``
