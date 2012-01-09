@@ -12,8 +12,10 @@ Les détails complets du projet sont disponibles à l'adresse du [tutorial](http
 
 1. [Configuration de Symfony2 et utilisation des templates](http://tutorial.symblog.co.uk/docs/configuration-and-templating.html)
 2. [Page de contact : validateurs, formulaires et envoi d’emails.](http://tutorial.symblog.co.uk/docs/validators-and-forms.html)
-
-Les 4 chapitres qui restent arrivent bientôt
+3. [Le modèle d’article : utilisation de Doctrine 2 et des données factices](http://keiruaprod.fr/symblog-fr/docs/doctrine-2-et-les-articles.html)
+4. [Le modèle de commentaires : ajouter des commentaires, dépôts Doctrine 2 et migrations.](http://keiruaprod.fr/symblog-fr/docs/maj-des-articles-ajout-de-commentaires.html)
+5. [Personnalisation de la vue : extensions Twig, barre latérale et Assetic](http://keiruaprod.fr/symblog-fr/docs/personnalisation-de-la-vue-twig-avance.html)
+6. [Les tests unitaires et fonctionnels avec PHPUnit](http://keiruaprod.fr/symblog-fr/docs/tests-unitaires-et-fonctionels-phpunit.html)
 
 Site de démo
 ------------
