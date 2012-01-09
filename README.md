@@ -8,7 +8,7 @@ Ce projet est la source de la documentation qui se trouve à l'adresse http://ke
 
 Les détails complets du projet sont disponibles à l'adresse du [tutorial](http://keiruaprod.fr/symblog-fr).
 
-6 chapitres sont sont disponibles actuellement :
+6 chapitres sont disponibles actuellement :
 
 1. [Configuration de Symfony2 et utilisation des templates](http://tutorial.symblog.co.uk/docs/configuration-and-templating.html)
 2. [Page de contact : validateurs, formulaires et envoi d’emails.](http://tutorial.symblog.co.uk/docs/validators-and-forms.html)
