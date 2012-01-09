@@ -1,17 +1,17 @@
-[Partie 5] - Personnalisation de la vue : extensions Twig, barre latérale et Assetic
+[Partie 5] - Personnalisation de la vue : extensions Twig, barre latÃ©rale et Assetic
 ====================================================================================
 
 Introduction
 ------------
 
-Dans ce chapitre, nous allons continuer à construire la partie utilisateur de Symblog. Nous allons améliore la page d'accueil pour aficher des informations sur les commentaires associés aux articles, ainsi qu'améliorer les résultats potentiels de recherche via SEO (Search Engine Optimization : optimisation pour les moteurs de recherches) en ajoutant le titre des articles dans l'URL. Nous allons également commencer à travailler sur la barre latérale, en lui ajoutant 2 composants classiques; un nuage de tags et une section "Derniers commentaires".
-Nous allons également explorer les différents environnements dans Symfony2 et apprendre comment lancer Symblog dans l'environnement de production.  Le moteur de template Twig va être étendu afin de proposer un nouveau filtre, et nous allons présenter Assetic pour la gestion des ressources externes.
+Dans ce chapitre, nous allons continuer Ã  construire la partie utilisateur de Symblog. Nous allons amÃ©liore la page d'accueil pour aficher des informations sur les commentaires associÃ©s aux articles, ainsi qu'amÃ©liorer les rÃ©sultats potentiels de recherche via SEO (Search Engine Optimization : optimisation pour les moteurs de recherches) en ajoutant le titre des articles dans l'URL. Nous allons Ã©galement commencer Ã  travailler sur la barre latÃ©rale, en lui ajoutant 2 composants classiques; un nuage de tags et une section "Derniers commentaires".
+Nous allons Ã©galement explorer les diffÃ©rents environnements dans Symfony2 et apprendre comment lancer Symblog dans l'environnement de production.  Le moteur de template Twig va Ãªtre Ã©tendu afin de proposer un nouveau filtre, et nous allons prÃ©senter Assetic pour la gestion des ressources externes.
 
 La page d'accueil - Articles et commentaires
 --------------------------------------------
 
-Pour le moment, la page d'accueil se contente d'afficher les articles mais ne fournit pas d'informations concernant les commentaires qui leurs sont associés. Maintenant que nous avons construit une entité ``Comment``, nous pouvons mettre à jour la page d'accueil afin d'ajouter ces informations.
-Comme nous avons déjà établi un lien entre les entités ``Blog`` et ``Comment``, nous savons que Doctrine 2 est capable de retrouver les commentaires associés à un article (souvenez vous que nous avons ajouté un membre ``$comments`` dans l'entité ``Blog``). Mettons à jour le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` avec ce qui suit.
+Pour le moment, la page d'accueil se contente d'afficher les articles mais ne fournit pas d'informations concernant les commentaires qui leurs sont associÃ©s. Maintenant que nous avons construit une entitÃ© ``Comment``, nous pouvons mettre Ã  jour la page d'accueil afin d'ajouter ces informations.
+Comme nous avons dÃ©jÃ  Ã©tabli un lien entre les entitÃ©s ``Blog`` et ``Comment``, nous savons que Doctrine 2 est capable de retrouver les commentaires associÃ©s Ã  un article (souvenez vous que nous avons ajoutÃ© un membre ``$comments`` dans l'entitÃ© ``Blog``). Mettons Ã  jour le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` avec ce qui suit.
 
 .. code-block:: html
 
@@ -27,9 +27,9 @@ Comme nous avons déjà établi un lien entre les entités ``Blog`` et ``Comment``, 
     
     {# .. #}
 
-Nous avons utilisé le getter ``comments`` afin de récupérer les commentaires de l'article, et avons ensuite passé la liste dans le filtre Twig ``length``. Si vous regardez maintenant la page d'accueil via ``http://symblog.dev/app_dev.php/``, vous pourrez voir que le nombre de commentaires de chaque article est affiché.
+Nous avons utilisÃ© le getter ``comments`` afin de rÃ©cupÃ©rer les commentaires de l'article, et avons ensuite passÃ© la liste dans le filtre Twig ``length``. Si vous regardez maintenant la page d'accueil via ``http://symblog.dev/app_dev.php/``, vous pourrez voir que le nombre de commentaires de chaque article est affichÃ©.
 
-Comme expliqué plus haut, nous avons déjà informé Doctrine 2 que le membre ``$comments`` de l'entité ``Blog`` estn associé à l'entité ``Comment``. Nous avons réalisé cela dans le chapitre précédent avec la métadonnée suivante dans l'entité ``Blog``, dans ``src/Blogger/BlogBundle/Entity/Blog.php``.
+Comme expliquÃ© plus haut, nous avons dÃ©jÃ  informÃ© Doctrine 2 que le membre ``$comments`` de l'entitÃ© ``Blog`` estn associÃ© Ã  l'entitÃ© ``Comment``. Nous avons rÃ©alisÃ© cela dans le chapitre prÃ©cÃ©dent avec la mÃ©tadonnÃ©e suivante dans l'entitÃ© ``Blog``, dans ``src/Blogger/BlogBundle/Entity/Blog.php``.
 
 .. code-block:: php
 
@@ -40,7 +40,7 @@ Comme expliqué plus haut, nous avons déjà informé Doctrine 2 que le membre ``$co
      */
     protected $comments;
 
-Nous savons ainsi que Doctrine 2 est conscient de la relation entre articles et commentaires, mais comment a-t-il remplit le membre ``$comments`` avec les entités ``Comment`` correspondantes ? Si vous vous souvenez de la méthode que nous avons créé pour le ``BlogRepository`` (voir ci-dessous), vous pourrez voir que nous n'avons fait aucune sélection des commentaires pour récupérer les articles de la page d'accueil.
+Nous savons ainsi que Doctrine 2 est conscient de la relation entre articles et commentaires, mais comment a-t-il remplit le membre ``$comments`` avec les entitÃ©s ``Comment`` correspondantes ? Si vous vous souvenez de la mÃ©thode que nous avons crÃ©Ã© pour le ``BlogRepository`` (voir ci-dessous), vous pourrez voir que nous n'avons fait aucune sÃ©lection des commentaires pour rÃ©cupÃ©rer les articles de la page d'accueil.
 
 .. code-block:: php
 
@@ -59,23 +59,23 @@ Nous savons ainsi que Doctrine 2 est conscient de la relation entre articles et 
                   ->getResult();
     }
 
-Néanmoins, Doctrine 2 utilise un processus appelé chargement feignant (lazy loading) où les entités ``Comment`` sont cherchées dans la base de donnée lorsque c'est nécessaire, dans le cas présent lors de l'appel à ``{{ blog.comments|length }}``. Nous pouvons démontrer ce processus à l'aide de la abrre d'outils pour développeurs. Nous avons déjà commencé à parler de cet outil, et il est maintenant temps d'aborder l'une des ses fonctionnalités les plus puissantes, le profiler pour Doctrine 2. On se rend dans le profiler Doctrine 2 en cliquant sur le dernier icone de la barre d'outils. Le chiffre à côté indique le nombre de requêtes exécutées sur la base de données pour l'actuelle requête HTTP.
+NÃ©anmoins, Doctrine 2 utilise un processus appelÃ© chargement feignant (lazy loading) oÃ¹ les entitÃ©s ``Comment`` sont cherchÃ©es dans la base de donnÃ©e lorsque c'est nÃ©cessaire, dans le cas prÃ©sent lors de l'appel Ã  ``{{ blog.comments|length }}``. Nous pouvons dÃ©montrer ce processus Ã  l'aide de la abrre d'outils pour dÃ©veloppeurs. Nous avons dÃ©jÃ  commencÃ© Ã  parler de cet outil, et il est maintenant temps d'aborder l'une des ses fonctionnalitÃ©s les plus puissantes, le profiler pour Doctrine 2. On se rend dans le profiler Doctrine 2 en cliquant sur le dernier icone de la barre d'outils. Le chiffre Ã  cÃ´tÃ© indique le nombre de requÃªtes exÃ©cutÃ©es sur la base de donnÃ©es pour l'actuelle requÃªte HTTP.
 
 .. image:: /_static/images/part_5/doctrine_2_toolbar_icon.jpg
     :align: center
-    :alt: Barre d'outils pour développeurs - Icône Doctrine 2
+    :alt: Barre d'outils pour dÃ©veloppeurs - IcÃ´ne Doctrine 2
 
-Si vous cliquez sur l'icône Doctrine 2, des informations sur les requêtes qui ont été exécutées par Doctrine 2 sur la base de données vous seront présentées.
+Si vous cliquez sur l'icÃ´ne Doctrine 2, des informations sur les requÃªtes qui ont Ã©tÃ© exÃ©cutÃ©es par Doctrine 2 sur la base de donnÃ©es vous seront prÃ©sentÃ©es.
 
 .. image:: /_static/images/part_5/doctrine_2_toolbar_queries.jpg
     :align: center
-    :alt: Barre d'outils pour développeurs - Requêtes Doctrine 2
+    :alt: Barre d'outils pour dÃ©veloppeurs - RequÃªtes Doctrine 2
 
-Comme vous pouvez le voir dans la capture d'écran ci-dessus, il y a plusieurs requêtes vers la base de donnée qui sont executées lorsque la page d'accueil est chargée. La seconde requête récupère les articles dans la base de donnée, et est exécutée en réponse à l'appel de la méthode
-``getLatestBlogs()`` de la classe ``BlogRepository``. Après cette requête, vous pouvez trouver plusieurs requêtes qui extraient les commentaires depuis la base de donnée, un article à la fois. On peut le voir grâce à ``WHERE t0.blog_id = ?`` dans chacune des requêtes, où le ``?`` est remplaté par la valeur du paramètre (l'identifiant de l'article). Chacune de ces requêtes est liée à un appel de ``{{ blog.comments }}`` dans le template de la page d'accueil. Chaque fois que cette fonction est effectuée, Doctrine 2 va charger, parce que c'est nécessaire ici et pas avant, et donc de manière feignante, les entités ``Comment`` associées à une entité ``Blog``.
+Comme vous pouvez le voir dans la capture d'Ã©cran ci-dessus, il y a plusieurs requÃªtes vers la base de donnÃ©e qui sont executÃ©es lorsque la page d'accueil est chargÃ©e. La seconde requÃªte rÃ©cupÃ¨re les articles dans la base de donnÃ©e, et est exÃ©cutÃ©e en rÃ©ponse Ã  l'appel de la mÃ©thode
+``getLatestBlogs()`` de la classe ``BlogRepository``. AprÃ¨s cette requÃªte, vous pouvez trouver plusieurs requÃªtes qui extraient les commentaires depuis la base de donnÃ©e, un article Ã  la fois. On peut le voir grÃ¢ce Ã  ``WHERE t0.blog_id = ?`` dans chacune des requÃªtes, oÃ¹ le ``?`` est remplatÃ© par la valeur du paramÃ¨tre (l'identifiant de l'article). Chacune de ces requÃªtes est liÃ©e Ã  un appel de ``{{ blog.comments }}`` dans le template de la page d'accueil. Chaque fois que cette fonction est effectuÃ©e, Doctrine 2 va charger, parce que c'est nÃ©cessaire ici et pas avant, et donc de maniÃ¨re feignante, les entitÃ©s ``Comment`` associÃ©es Ã  une entitÃ© ``Blog``.
 
-Bien que le lazy loading soit très efficace pour récupérer des entités depuis la base de données, ce n'est pas toujours la manière la plus efficace de procéder. Doctrine 2 fournit la possibilité de ``joindre`` des entités reliées entre elles lorsqu'une requête a lieu sur la base de données. De cette manière, on peut extraire les entité ``Blog`` et leurs entités ``Comment`` associées en une seule requête.
-Mettez à jour le code du ``QueryBuilder`` de la classe ``BlogRepository`` dans ``src/Blogger/BlogBundle/Repository/BlogRepositoy.php`` pour joindre les commentaires.
+Bien que le lazy loading soit trÃ¨s efficace pour rÃ©cupÃ©rer des entitÃ©s depuis la base de donnÃ©es, ce n'est pas toujours la maniÃ¨re la plus efficace de procÃ©der. Doctrine 2 fournit la possibilitÃ© de ``joindre`` des entitÃ©s reliÃ©es entre elles lorsqu'une requÃªte a lieu sur la base de donnÃ©es. De cette maniÃ¨re, on peut extraire les entitÃ© ``Blog`` et leurs entitÃ©s ``Comment`` associÃ©es en une seule requÃªte.
+Mettez Ã  jour le code du ``QueryBuilder`` de la classe ``BlogRepository`` dans ``src/Blogger/BlogBundle/Repository/BlogRepositoy.php`` pour joindre les commentaires.
 
 .. code-block:: php
 
@@ -95,11 +95,11 @@ Mettez à jour le code du ``QueryBuilder`` de la classe ``BlogRepository`` dans `
                   ->getResult();
     }
 
-Si maintenant vous raffraichissez la page d'accueil et allez examiner la sortie de Doctrine 2 dans la barre d'outils, vous allez remarquer que le nombre de requêtes a chuté de manière drastique. Vous pouvez également voir que la table de commentaires a été jointe à la table d'articles.
+Si maintenant vous raffraichissez la page d'accueil et allez examiner la sortie de Doctrine 2 dans la barre d'outils, vous allez remarquer que le nombre de requÃªtes a chutÃ© de maniÃ¨re drastique. Vous pouvez Ã©galement voir que la table de commentaires a Ã©tÃ© jointe Ã  la table d'articles.
 
-Le lazy loading et la jonction d'entités qui sont liées sont deux concepts très puissants, mais qui doivent être utilisés correctement. L'équilibre entre les deux doit être trouvé afin de permettre aux applications de fonctionner aussi efficacement que possible. Au premier abord, il simble attrayant de joindre toutes les entités liées afin de ne jamais avoir à faire du lazy loading et à conserver un nombre faible de requêtes vers la base de données. Il est néanmoins important de se souvenir que plus il y a d'informations à aller chercher dans la base de données, plus les traitements à effectuer par Doctrine 2 pour créer les objets associés aux entités sont lourds. Plus de données signifie également plus d'utilisation mémoire par le serveur pour stocker les objets.
+Le lazy loading et la jonction d'entitÃ©s qui sont liÃ©es sont deux concepts trÃ¨s puissants, mais qui doivent Ãªtre utilisÃ©s correctement. L'Ã©quilibre entre les deux doit Ãªtre trouvÃ© afin de permettre aux applications de fonctionner aussi efficacement que possible. Au premier abord, il simble attrayant de joindre toutes les entitÃ©s liÃ©es afin de ne jamais avoir Ã  faire du lazy loading et Ã  conserver un nombre faible de requÃªtes vers la base de donnÃ©es. Il est nÃ©anmoins important de se souvenir que plus il y a d'informations Ã  aller chercher dans la base de donnÃ©es, plus les traitements Ã  effectuer par Doctrine 2 pour crÃ©er les objets associÃ©s aux entitÃ©s sont lourds. Plus de donnÃ©es signifie Ã©galement plus d'utilisation mÃ©moire par le serveur pour stocker les objets.
 
-Avant d'avancer, faisant un ajout mineur au template de la page d'accueil. Mettez à jour le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` pour ajouter un lien vers l'affichage des commentaires de l'article.
+Avant d'avancer, faisant un ajout mineur au template de la page d'accueil. Mettez Ã  jour le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` pour ajouter un lien vers l'affichage des commentaires de l'article.
 
 .. code-block:: html
 
@@ -115,15 +115,15 @@ Avant d'avancer, faisant un ajout mineur au template de la page d'accueil. Mette
     
     {# .. #}
             
-La barre latérale.
+La barre latÃ©rale.
 ------------------
 
-Actuellement, la barre latérale de Symblog est un peu vide. Nous allons la mettre à jour en lui ajoutant 2 composants, un nuage de tags et une liste des derniers commentaires.
+Actuellement, la barre latÃ©rale de Symblog est un peu vide. Nous allons la mettre Ã  jour en lui ajoutant 2 composants, un nuage de tags et une liste des derniers commentaires.
 
 Le nuage de tags
 ~~~~~~~~~~~~~~~~
 
-Le nuage de tags montre les tags des articles, les plus populaires ayant plus d'importance visuelle à travers un affichage plus gros. Pour celà, il nous faut un moyen de récupérer tous les articles de tous les articles. Créons de nouvelles méthodes dans la classe ``BlogRepository`` pour cela. Mettez à jour la classe ``BlogRepository`` dans ``src/Blogger/BlogBundle/Repository/BlogRepository.php`` avec ce qui suit.
+Le nuage de tags montre les tags des articles, les plus populaires ayant plus d'importance visuelle Ã  travers un affichage plus gros. Pour celÃ , il nous faut un moyen de rÃ©cupÃ©rer tous les articles de tous les articles. CrÃ©ons de nouvelles mÃ©thodes dans la classe ``BlogRepository`` pour cela. Mettez Ã  jour la classe ``BlogRepository`` dans ``src/Blogger/BlogBundle/Repository/BlogRepository.php`` avec ce qui suit.
 
 .. code-block:: php
 
@@ -177,10 +177,10 @@ Le nuage de tags montre les tags des articles, les plus populaires ayant plus d'
         return $tagWeights;
     }
 
-Comme les tags sont stockés dans la base de donnée au format CSV (comma separated values, c'est à dire que chaque valeur est séparée de la précédente par une virgule), il nous faut un moyen de séparer et de renvoyer le résultat sous la forme d'un tableau. C'est le rôle de ``getTags()``.
-La méthode ``getTagWeights()`` se sert ensuite du tableau de tafs pour calculer le poids (weight) de chaque tag à partir de son nombre d'occurences dans le tableau. Les tags sont également mélangés afin d'ajouter un peu d'aléatoire à leur affichage.
+Comme les tags sont stockÃ©s dans la base de donnÃ©e au format CSV (comma separated values, c'est Ã  dire que chaque valeur est sÃ©parÃ©e de la prÃ©cÃ©dente par une virgule), il nous faut un moyen de sÃ©parer et de renvoyer le rÃ©sultat sous la forme d'un tableau. C'est le rÃ´le de ``getTags()``.
+La mÃ©thode ``getTagWeights()`` se sert ensuite du tableau de tafs pour calculer le poids (weight) de chaque tag Ã  partir de son nombre d'occurences dans le tableau. Les tags sont Ã©galement mÃ©langÃ©s afin d'ajouter un peu d'alÃ©atoire Ã  leur affichage.
 
-Maintenant que nous sommes capable de générer un nuage de tags, il faut l'afficher. Créez une nouvelle action dans le ``PageController`` dans le fichier ``src/Blogger/BlogBundle/Controller/PageController.php`` pour gérer la barre latérale.
+Maintenant que nous sommes capable de gÃ©nÃ©rer un nuage de tags, il faut l'afficher. CrÃ©ez une nouvelle action dans le ``PageController`` dans le fichier ``src/Blogger/BlogBundle/Controller/PageController.php`` pour gÃ©rer la barre latÃ©rale.
 
 .. code-block:: php
 
@@ -202,7 +202,7 @@ Maintenant que nous sommes capable de générer un nuage de tags, il faut l'affich
         ));
     }
 
-Cette action est très simple, elle utilise les 2 nouvelles méthodes du ``BlogRepository`` pour générer le nuage de tags, qu'elle passe ensuite en paramètres à la vue. Il nous faut maintenant créer cette vue, dans ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig``.
+Cette action est trÃ¨s simple, elle utilise les 2 nouvelles mÃ©thodes du ``BlogRepository`` pour gÃ©nÃ©rer le nuage de tags, qu'elle passe ensuite en paramÃ¨tres Ã  la vue. Il nous faut maintenant crÃ©er cette vue, dans ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig``.
 
 .. code-block:: html
 
@@ -221,9 +221,9 @@ Cette action est très simple, elle utilise les 2 nouvelles méthodes du ``BlogRep
         </p>
     </section>
 
-Le template est également très simple. Il traverse les différents tags, en leur associant une classe CSS en fonction de leur poids. Dans cette boucle ``for`` un peu particulière, on accède aux couples ``clé/valeur`` du tableau avec ``tag`` pour la clé et ``weight`` comme valeur. Il existe plusieurs variations de comment utiliser une boucle ```for`` avec Twig disponible dans la ``documentation <http://twig.sensiolabs.org/doc/templates.html#for>`_.
+Le template est Ã©galement trÃ¨s simple. Il traverse les diffÃ©rents tags, en leur associant une classe CSS en fonction de leur poids. Dans cette boucle ``for`` un peu particuliÃ¨re, on accÃ¨de aux couples ``clÃ©/valeur`` du tableau avec ``tag`` pour la clÃ© et ``weight`` comme valeur. Il existe plusieurs variations de comment utiliser une boucle ```for`` avec Twig disponible dans la ``documentation <http://twig.sensiolabs.org/doc/templates.html#for>`_.
 
-Si vous regardez le principal template du ``BloggerBlogBundle`` dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig``, vous pourrez remarquer que nous avions placé un élément temporaire pour le bloc de la barre latérale. On peut maintenant le remplacer, en affichant la nouvelle action de la barre latérale. Souvenez vous que la fonction Twig ``render`` permet d'afficher le contenu d'une action d'un controlleur, dans le cas présent l'action ``sidebar`` du controlleur ``Page``.
+Si vous regardez le principal template du ``BloggerBlogBundle`` dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig``, vous pourrez remarquer que nous avions placÃ© un Ã©lÃ©ment temporaire pour le bloc de la barre latÃ©rale. On peut maintenant le remplacer, en affichant la nouvelle action de la barre latÃ©rale. Souvenez vous que la fonction Twig ``render`` permet d'afficher le contenu d'une action d'un controlleur, dans le cas prÃ©sent l'action ``sidebar`` du controlleur ``Page``.
 
 .. code-block:: html
 
@@ -235,7 +235,7 @@ Si vous regardez le principal template du ``BloggerBlogBundle`` dans ``src/Blogg
         {% render "BloggerBlogBundle:Page:sidebar" %}
     {% endblock %}
 
-Enfin, ajoutons de la CSS au nuage de tags. Créez la nouvelle feuille de style dans 
+Enfin, ajoutons de la CSS au nuage de tags. CrÃ©ez la nouvelle feuille de style dans 
 ``src/Blogger/BlogBundle/Resources/public/css/sidebar.css``.
 
 .. code-block:: css
@@ -256,7 +256,7 @@ Enfin, ajoutons de la CSS au nuage de tags. Créez la nouvelle feuille de style d
     .sidebar .tags .weight-4 { font-size: 21px; }
     .sidebar .tags .weight-5 { font-size: 24px; }
 
-Comme nous avons ajouté une nouvelle feuille de style, il faut l'inclure. Mettez à jour le template principale du ``BloggerBlogBundle`` dans
+Comme nous avons ajoutÃ© une nouvelle feuille de style, il faut l'inclure. Mettez Ã  jour le template principale du ``BloggerBlogBundle`` dans
 ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` avec ce qui suit.
 
 .. code-block:: html
@@ -275,20 +275,20 @@ Comme nous avons ajouté une nouvelle feuille de style, il faut l'inclure. Mettez
 
 .. note::
 
-    Si vous n'utilisez pas les liens symboliques pour référencer les fichiers externes dans le répertoire ``web``, vous devez relancer la commande suivante afin de copier les nouveaux fichiers CSS.
+    Si vous n'utilisez pas les liens symboliques pour rÃ©fÃ©rencer les fichiers externes dans le rÃ©pertoire ``web``, vous devez relancer la commande suivante afin de copier les nouveaux fichiers CSS.
 
     .. code-block:: bash
 
         $ php app/console assets:install web
         
-Si vous mettez maintenant à jour la page d'accueil de Symblog, vous verrez que le nuage de tags est affiché dans la barre latérale. Afin que les tags soient affichés avec différents poids, vous devrez modifier les tags factices afin que certains soient plus utilisés que d'autres.
+Si vous mettez maintenant Ã  jour la page d'accueil de Symblog, vous verrez que le nuage de tags est affichÃ© dans la barre latÃ©rale. Afin que les tags soient affichÃ©s avec diffÃ©rents poids, vous devrez modifier les tags factices afin que certains soient plus utilisÃ©s que d'autres.
 
-Commentaires récents.
+Commentaires rÃ©cents.
 ~~~~~~~~~~~~~~~~~~~~~
 
-Maintenant que le nuage de tags est en place, ajoutons un composant pour les derniers commentaires à la barre latérale.
+Maintenant que le nuage de tags est en place, ajoutons un composant pour les derniers commentaires Ã  la barre latÃ©rale.
 
-Il nous faut tout d'abord un moyen de récupérer les derniers commentaires des articles. Nous allons pour cela ajouter une méthode dans le ``CommentRepository`` situé dans ``src/Blogger/BlogBundle/Repository/CommentRepository.php``.
+Il nous faut tout d'abord un moyen de rÃ©cupÃ©rer les derniers commentaires des articles. Nous allons pour cela ajouter une mÃ©thode dans le ``CommentRepository`` situÃ© dans ``src/Blogger/BlogBundle/Repository/CommentRepository.php``.
 
 .. code-block:: php
 
@@ -308,7 +308,7 @@ Il nous faut tout d'abord un moyen de récupérer les derniers commentaires des ar
                   ->getResult();
     }
 
-Maintenant, mettez à jour l'action de la barre latérale dans ``src/Blogger/BlogBundle/Controller/PageController.php`` afin de récupérer les derniers commentaires et les fournir à la vue.
+Maintenant, mettez Ã  jour l'action de la barre latÃ©rale dans ``src/Blogger/BlogBundle/Controller/PageController.php`` afin de rÃ©cupÃ©rer les derniers commentaires et les fournir Ã  la vue.
 
 .. code-block:: php
 
@@ -329,7 +329,7 @@ Maintenant, mettez à jour l'action de la barre latérale dans ``src/Blogger/BlogB
         ));
     }
 
-Vous remarquerez également que nous avons utilisé un nouveau paramètre appelé ``blogger_blog.comments.latest_comment_limit`` afin de limiter le nombre de commentaires à afficher. Pour créer ce paramètre, mettez à jour le fichier de configuration dans ``src/Blogger/BlogBundle/Resources/config/config.yml`` avec ce qui suit.
+Vous remarquerez Ã©galement que nous avons utilisÃ© un nouveau paramÃ¨tre appelÃ© ``blogger_blog.comments.latest_comment_limit`` afin de limiter le nombre de commentaires Ã  afficher. Pour crÃ©er ce paramÃ¨tre, mettez Ã  jour le fichier de configuration dans ``src/Blogger/BlogBundle/Resources/config/config.yml`` avec ce qui suit.
 
 .. code-block:: yaml
 
@@ -341,7 +341,7 @@ Vous remarquerez également que nous avons utilisé un nouveau paramètre appelé ``
         # Blogger max latest comments
         blogger_blog.comments.latest_comment_limit: 10
 
-Il faut enfin afficher les derniers commentaires dans le template de la barre latérale. Mettez à jour le template dans  ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig`` en y ajoutant ce qui suit.
+Il faut enfin afficher les derniers commentaires dans le template de la barre latÃ©rale. Mettez Ã  jour le template dans  ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig`` en y ajoutant ce qui suit.
 
 .. code-block:: html
 
@@ -371,31 +371,31 @@ Il faut enfin afficher les derniers commentaires dans le template de la barre la
         {% endfor %}
     </section>
 
-Si vous mettez maintenant à jour le site, vous verrez que les derniers commentaires sont affichés dans la barre latérale, juste en dessous du nuage de tags.
+Si vous mettez maintenant Ã  jour le site, vous verrez que les derniers commentaires sont affichÃ©s dans la barre latÃ©rale, juste en dessous du nuage de tags.
 
 .. image:: /_static/images/part_5/sidebar.jpg
     :align: center
-    :alt: Barre latérale - Nuage de tags et derniers commentaires.
+    :alt: Barre latÃ©rale - Nuage de tags et derniers commentaires.
 
 Extensions Twig 
 ---------------
 
-Pour le moment nous avons affiché les dates dans un format de date standard tel que `2011-04-21`. Une approche bien plus sympa serait d'afficher depuis combien de temps les commentaires ont été ajoutés, tel que `posté il y a 3 heures`. Nous pourrions ajouter une méthode dans l'entité ``Comment`` afin de réaliser cela et changer les templates pour utiliser cette méthode au lieu de ``{{ comment.created|date('Y-m-d h:iA') }}``.
+Pour le moment nous avons affichÃ© les dates dans un format de date standard tel que `2011-04-21`. Une approche bien plus sympa serait d'afficher depuis combien de temps les commentaires ont Ã©tÃ© ajoutÃ©s, tel que `postÃ© il y a 3 heures`. Nous pourrions ajouter une mÃ©thode dans l'entitÃ© ``Comment`` afin de rÃ©aliser cela et changer les templates pour utiliser cette mÃ©thode au lieu de ``{{ comment.created|date('Y-m-d h:iA') }}``.
 
-Comme il est possible que l'on veuille utiliser cette fonctionnalité à d'autres endroits, il est logique de sortir le code de l'entité ``Comment``. Comme transformer la date est une tâche spécifique à la vue, nous devrions l'implémenter en utilisant le moteur de template Twig. Twig nous permet en effet cela grâce à ses possibilités d'extensions.
+Comme il est possible que l'on veuille utiliser cette fonctionnalitÃ© Ã  d'autres endroits, il est logique de sortir le code de l'entitÃ© ``Comment``. Comme transformer la date est une tÃ¢che spÃ©cifique Ã  la vue, nous devrions l'implÃ©menter en utilisant le moteur de template Twig. Twig nous permet en effet cela grÃ¢ce Ã  ses possibilitÃ©s d'extensions.
 
-Nous pouvons utiliser l'interface d'`extension <http://www.twig-project.org/doc/extensions.html>`_ de Twig pour étendre les fonctionnalités par défaut qu'il propose. Nous allons créer une extension qui nous fournira un nouveau filtre qui s'utilisera de la manière suivante :
+Nous pouvons utiliser l'interface d'`extension <http://www.twig-project.org/doc/extensions.html>`_ de Twig pour Ã©tendre les fonctionnalitÃ©s par dÃ©faut qu'il propose. Nous allons crÃ©er une extension qui nous fournira un nouveau filtre qui s'utilisera de la maniÃ¨re suivante :
 
 .. code-block:: html
     
     {{ comment.created|created_ago }}
     
-Cela affichera une date de création du commentaire de type `posted 2 days ago` pour `Posté il y a 2 jours`.
+Cela affichera une date de crÃ©ation du commentaire de type `posted 2 days ago` pour `PostÃ© il y a 2 jours`.
 
 L'extension
 ~~~~~~~~~~~
 
-Créez un fichier pour l'extension Twig dans ``src/Blogger/BlogBundle/Twig/Extensions/BloggerBlogExtension.php`` et mettez le à jour avec le contenu suivant.
+CrÃ©ez un fichier pour l'extension Twig dans ``src/Blogger/BlogBundle/Twig/Extensions/BloggerBlogExtension.php`` et mettez le Ã  jour avec le contenu suivant.
 
 .. code-block:: php
 
@@ -454,12 +454,12 @@ Créez un fichier pour l'extension Twig dans ``src/Blogger/BlogBundle/Twig/Extens
         }
     }
 
-Créer l'extension est assez simple. On surcharge la méthode ``getFilters()`` pour renvoyer autant de filtres que l'on souhaite. Dans le cas présent, on a créé le filtre ``created_ago``. Ce filtre est ensuite enregistré de manière à appeler la méthode ``createdAgo``, qui se charge simplement de transformer un objet ``DateTime`` en une chaine de caractères qui représente la durée écoulée depuis la valeur stockée dans l'objet ``DateTime``.
+CrÃ©er l'extension est assez simple. On surcharge la mÃ©thode ``getFilters()`` pour renvoyer autant de filtres que l'on souhaite. Dans le cas prÃ©sent, on a crÃ©Ã© le filtre ``created_ago``. Ce filtre est ensuite enregistrÃ© de maniÃ¨re Ã  appeler la mÃ©thode ``createdAgo``, qui se charge simplement de transformer un objet ``DateTime`` en une chaine de caractÃ¨res qui reprÃ©sente la durÃ©e Ã©coulÃ©e depuis la valeur stockÃ©e dans l'objet ``DateTime``.
 
 Enregistrer l'extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour rendre l'extension Twig disponible, il faut mettre à jour le fichier de services dans ``src/Blogger/BlogBundle/Resources/config/services.yml`` avec ce qui suit.
+Pour rendre l'extension Twig disponible, il faut mettre Ã  jour le fichier de services dans ``src/Blogger/BlogBundle/Resources/config/services.yml`` avec ce qui suit.
 
 .. code-block:: yaml
 
@@ -469,12 +469,12 @@ Pour rendre l'extension Twig disponible, il faut mettre à jour le fichier de ser
             tags:
                 - { name: twig.extension }
 
-Vous pouvez voir que celà enregistre un nouveau service en utilisant la classe d'extension ``BloggerBlogExtension`` que nous venons de créer.
+Vous pouvez voir que celÃ  enregistre un nouveau service en utilisant la classe d'extension ``BloggerBlogExtension`` que nous venons de crÃ©er.
 
-Mettre à jour la vue
+Mettre Ã  jour la vue
 ~~~~~~~~~~~~~~~~~~~~
 
-Le nouveau filtre Twig est désormais prêt à être utilisé. Mettons à jour la section des derniers commentaires de la barre latérale pour nous en servir. Mettez à jour le contenu du template de la barre latérale dans ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig`` avec ce qui suit :
+Le nouveau filtre Twig est dÃ©sormais prÃªt Ã  Ãªtre utilisÃ©. Mettons Ã  jour la section des derniers commentaires de la barre latÃ©rale pour nous en servir. Mettez Ã  jour le contenu du template de la barre latÃ©rale dans ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig`` avec ce qui suit :
 
 .. code-block:: html
 
@@ -493,9 +493,9 @@ Le nouveau filtre Twig est désormais prêt à être utilisé. Mettons à jour la sect
         {% endfor %}
     </section>
 
-Si vous vous rendez maintenant sur la page d'accueil ``http://symblog.dev/app_dev.php/``, vous allez voir que les dates des derniers commentaires utilisent le filtre Twig pour afficher les durées depuis lesquelles ils ont été postés.
+Si vous vous rendez maintenant sur la page d'accueil ``http://symblog.dev/app_dev.php/``, vous allez voir que les dates des derniers commentaires utilisent le filtre Twig pour afficher les durÃ©es depuis lesquelles ils ont Ã©tÃ© postÃ©s.
 
-Nous allons également mettre à jour les commentaires de la page d'affichage des articles afin d'utiliser là aussi le nouveau filtre. Remplacez le contenu du template dans ``src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig`` avec ce qui suit.
+Nous allons Ã©galement mettre Ã  jour les commentaires de la page d'affichage des articles afin d'utiliser lÃ  aussi le nouveau filtre. Remplacez le contenu du template dans ``src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig`` avec ce qui suit.
 
 .. code-block:: html
 
@@ -516,17 +516,17 @@ Nous allons également mettre à jour les commentaires de la page d'affichage des 
 
     Il y a plusieurs extensions Twig utiles disponibles via la librarie 
     `Twig-Extensions <https://github.com/fabpot/Twig-extensions>`_  sur GitHub.
-    Si vous créez une extension utile, proposez une proposition d'ajout (pull request) dans ce dépôt et il est possible qu'elle soit incluse afin que d'autres puissent s'en servir.
+    Si vous crÃ©ez une extension utile, proposez une proposition d'ajout (pull request) dans ce dÃ©pÃ´t et il est possible qu'elle soit incluse afin que d'autres puissent s'en servir.
 
 Slugification de l'URL
 ----------------------
 
-Actuellement, l'URL de chaque article montre seulement l'identifiant de l'article. Bien que ce soit parfaitement acceptable d'un point de vue fonctionnel, c'est pas terrible d'un point de vue SEO (Search Engine Optimization: optimisation pour les moteurs de recherche). Par exemple, l'URL ``http://symblog.dev/1`` ne donne aucune information sur le contenu de l'article, alors que quelquechose comme ``http://symblog.dev/1/a-day-with-symfony2`` est beaucoup mieux de ce point de vue. Pour réaliser celà, il nous faut slugifier le titre des articles et nous en servir comme élément de l'adresse. Slugifier le titre revient à enlever tous les caractères non ASCII et les remplacer par un ``-``.
+Actuellement, l'URL de chaque article montre seulement l'identifiant de l'article. Bien que ce soit parfaitement acceptable d'un point de vue fonctionnel, c'est pas terrible d'un point de vue SEO (Search Engine Optimization: optimisation pour les moteurs de recherche). Par exemple, l'URL ``http://symblog.dev/1`` ne donne aucune information sur le contenu de l'article, alors que quelquechose comme ``http://symblog.dev/1/a-day-with-symfony2`` est beaucoup mieux de ce point de vue. Pour rÃ©aliser celÃ , il nous faut slugifier le titre des articles et nous en servir comme Ã©lÃ©ment de l'adresse. Slugifier le titre revient Ã  enlever tous les caractÃ¨res non ASCII et les remplacer par un ``-``.
 
-Mise à jour de la route
+Mise Ã  jour de la route
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour commencer, modifions les règles de routage pour la page d'affichage des articles afin d'ajouter sa nouvelle composante ``slug``. Mettez à jour les règles de rouatge dans ``src/Blogger/BlogBundle/Resources/config/routing.yml``
+Pour commencer, modifions les rÃ¨gles de routage pour la page d'affichage des articles afin d'ajouter sa nouvelle composante ``slug``. Mettez Ã  jour les rÃ¨gles de rouatge dans ``src/Blogger/BlogBundle/Resources/config/routing.yml``
 
 .. code-block:: yaml
 
@@ -542,7 +542,7 @@ Pour commencer, modifions les règles de routage pour la page d'affichage des art
 Le controlleur
 ~~~~~~~~~~~~~~
 
-Comme avec le composant déjà existant ``id``, le nouvel élément ``slug`` va être passé à l'action du controlleur en argument. Il faut donc mettre à jour le controlleur dans ``src/Blogger/BlogBundle/Controller/BlogController.php`` afin de répercuter ce changement.
+Comme avec le composant dÃ©jÃ  existant ``id``, le nouvel Ã©lÃ©ment ``slug`` va Ãªtre passÃ© Ã  l'action du controlleur en argument. Il faut donc mettre Ã  jour le controlleur dans ``src/Blogger/BlogBundle/Controller/BlogController.php`` afin de rÃ©percuter ce changement.
 
 .. code-block:: php
 
@@ -555,7 +555,7 @@ Comme avec le composant déjà existant ``id``, le nouvel élément ``slug`` va être
 
 .. tip::
 
-    L'ordre dans lequel les arguments sont passés à l'action du controlleur n'a pas d'importance, seul leur nom compte. Symfony2 est capable d'associer les paramètres de routage avec la liste de paramètres pour nous. Bien que nous n'ayons pas utilisé pour le moment de valeurs par défaut, cela vaut le coup de les mentionner ici. Si nous ajoutions un nouveau composant à la règle de routage, nous pourrions très bien lui spécifier également une valeur par défaut, à l'aide de l'option ``defauts``.
+    L'ordre dans lequel les arguments sont passÃ©s Ã  l'action du controlleur n'a pas d'importance, seul leur nom compte. Symfony2 est capable d'associer les paramÃ¨tres de routage avec la liste de paramÃ¨tres pour nous. Bien que nous n'ayons pas utilisÃ© pour le moment de valeurs par dÃ©faut, cela vaut le coup de les mentionner ici. Si nous ajoutions un nouveau composant Ã  la rÃ¨gle de routage, nous pourrions trÃ¨s bien lui spÃ©cifier Ã©galement une valeur par dÃ©faut, Ã  l'aide de l'option ``defauts``.
 
     .. code-block:: yaml
 
@@ -573,17 +573,17 @@ Comme avec le composant déjà existant ``id``, le nouvel élément ``slug`` va être
             // ..
         }
 
-    En utilisant cette méthode, les requêtes à l'adresse ``http://symblog.dev/1/symfony2-blog`` mèneraient à avoir ``$comments`` à true dans ``showAction``.
+    En utilisant cette mÃ©thode, les requÃªtes Ã  l'adresse ``http://symblog.dev/1/symfony2-blog`` mÃ¨neraient Ã  avoir ``$comments`` Ã  true dans ``showAction``.
 
 Slugification du titre
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Comme on veut générer le slug à partir du titre de l'article, nous allons générer automatiquement cette valeur. Nous pourrions réaliser celà automatiquement à l'exécution sur le titre de l'article, mais à la place nous allons plutôt stocker le slug dans l'entité ``Blog`` et le stocker dans la base de données.
+Comme on veut gÃ©nÃ©rer le slug Ã  partir du titre de l'article, nous allons gÃ©nÃ©rer automatiquement cette valeur. Nous pourrions rÃ©aliser celÃ  automatiquement Ã  l'exÃ©cution sur le titre de l'article, mais Ã  la place nous allons plutÃ´t stocker le slug dans l'entitÃ© ``Blog`` et le stocker dans la base de donnÃ©es.
 
-Mise à jour de l'entité Blog
+Mise Ã  jour de l'entitÃ© Blog
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ajoutons un nouveau membre à l'entité ``Blog`` pour stocker le slug. Mettez à jour l'entité ``Blog`` dans ``src/Blogger/BlogBundle/Entity/Blog.php``
+Ajoutons un nouveau membre Ã  l'entitÃ© ``Blog`` pour stocker le slug. Mettez Ã  jour l'entitÃ© ``Blog`` dans ``src/Blogger/BlogBundle/Entity/Blog.php``
 
 .. code-block:: php
 
@@ -601,21 +601,21 @@ Ajoutons un nouveau membre à l'entité ``Blog`` pour stocker le slug. Mettez à jo
         // ..
     }
 
-Générez maintenant les accesseurs pour le nouveau membre ``$slug``. Comme avant, lancez la tâche :
+GÃ©nÃ©rez maintenant les accesseurs pour le nouveau membre ``$slug``. Comme avant, lancez la tÃ¢che :
 
 .. code-block:: bash
 
     $ php app/console doctrine:generate:entities Blogger
 
-Il est ensuite temps de mettre à jour le schéma de base de donnée :
+Il est ensuite temps de mettre Ã  jour le schÃ©ma de base de donnÃ©e :
 
 .. code-block:: bash
 
     $ php app/console doctrine:migrations:diff
     $ php app/console doctrine:migrations:migrate
 
-Pour générer la valeur du slug, nous allons utiliser la méthode slugify du Tutorial Symfony 1
-`Jobeet <http://www.symfony-project.org/jobeet/1_4/Propel/en/08>`_. Ajoutez la méthode ``slugify`` dans l'entité ``Blog`` situé dans ``src/Blogger/BlogBundle/Entity/Blog.php``
+Pour gÃ©nÃ©rer la valeur du slug, nous allons utiliser la mÃ©thode slugify du Tutorial Symfony 1
+`Jobeet <http://www.symfony-project.org/jobeet/1_4/Propel/en/08>`_. Ajoutez la mÃ©thode ``slugify`` dans l'entitÃ© ``Blog`` situÃ© dans ``src/Blogger/BlogBundle/Entity/Blog.php``
 
 .. code-block:: php
 
@@ -649,7 +649,7 @@ Pour générer la valeur du slug, nous allons utiliser la méthode slugify du Tutor
         return $text;
     }
 
-Comme nous voulons générer automatiquement le slug à partir du titre, on peut générer le slug lorsque la valeur du titre est affectée. Pour celà, on peut mettre à jour l'accesseur ``setTitle`` pour mettre également à jour la valeur du slug. Mettez à jour l'entité ``Blog`` dans
+Comme nous voulons gÃ©nÃ©rer automatiquement le slug Ã  partir du titre, on peut gÃ©nÃ©rer le slug lorsque la valeur du titre est affectÃ©e. Pour celÃ , on peut mettre Ã  jour l'accesseur ``setTitle`` pour mettre Ã©galement Ã  jour la valeur du slug. Mettez Ã  jour l'entitÃ© ``Blog`` dans
 ``src/Blogger/BlogBundle/Entity/Blog.php`` avec ce qui suit.
 
 .. code-block:: php
@@ -663,7 +663,7 @@ Comme nous voulons générer automatiquement le slug à partir du titre, on peut gé
         $this->setSlug($this->title);
     }
 
-Maintenant mettez à jour la méthode ``setSlug`` afin d'affecter une valeur `slugifiée` à l'attribut slug.
+Maintenant mettez Ã  jour la mÃ©thode ``setSlug`` afin d'affecter une valeur `slugifiÃ©e` Ã  l'attribut slug.
 
 .. code-block:: php
 
@@ -674,19 +674,19 @@ Maintenant mettez à jour la méthode ``setSlug`` afin d'affecter une valeur `slug
         $this->slug = $this->slugify($slug);
     }
 
-Maintenant rechargez les données factices pour générer les slugs des articles.
+Maintenant rechargez les donnÃ©es factices pour gÃ©nÃ©rer les slugs des articles.
 
 .. code-block:: bash
 
     $ php app/console doctrine:fixtures:load
 
-Mise à jour des routes générées
+Mise Ã  jour des routes gÃ©nÃ©rÃ©es
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Il faut enfin mettre à jour les appels déjà existants à la génération de route vers la page d'affichage des articles. Il y a plusieurs endroits où celà doit être mis à jour.
+Il faut enfin mettre Ã  jour les appels dÃ©jÃ  existants Ã  la gÃ©nÃ©ration de route vers la page d'affichage des articles. Il y a plusieurs endroits oÃ¹ celÃ  doit Ãªtre mis Ã  jour.
 
 Ouvrez le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` et remplacez son contenu avec ce qui suit. Il y a 3 modifications de la route 
-``BloggerBlogBundle_blog_show`` dans ce template. Les modifications ajoutent simplement le slug des titres des articles en paramètre de la fonction ``path``. 
+``BloggerBlogBundle_blog_show`` dans ce template. Les modifications ajoutent simplement le slug des titres des articles en paramÃ¨tre de la fonction ``path``. 
 
 .. code-block:: html
 
@@ -719,7 +719,7 @@ Ouvrez le template de la page d'accueil dans ``src/Blogger/BlogBundle/Resources/
         {% endfor %}
     {% endblock %}
 
-De plus, une mise à jour doit être faite à la section Derniers commentaires de la barre latérale dans le template ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig``.
+De plus, une mise Ã  jour doit Ãªtre faite Ã  la section Derniers commentaires de la barre latÃ©rale dans le template ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig``.
 
 .. code-block:: html
 
@@ -733,7 +733,7 @@ De plus, une mise à jour doit être faite à la section Derniers commentaires de l
 
     {# .. #}
 
-Enfin, l'action ``createAction`` du ``CommentController`` doit être mise à jour lorsqu'elle redirige vers la page d'affichage d'un article lorsqu'un commentaire a été posté. Mettez à jour le ``CommentController`` situé dans ``src/Blogger/BlogBundle/Controller/CommentController.php`` avec ce qui suit.
+Enfin, l'action ``createAction`` du ``CommentController`` doit Ãªtre mise Ã  jour lorsqu'elle redirige vers la page d'affichage d'un article lorsqu'un commentaire a Ã©tÃ© postÃ©. Mettez Ã  jour le ``CommentController`` situÃ© dans ``src/Blogger/BlogBundle/Controller/CommentController.php`` avec ce qui suit.
 
 .. code-block:: php
 
@@ -756,56 +756,56 @@ Enfin, l'action ``createAction`` du ``CommentController`` doit être mise à jour 
         // ..
     }
 
-Maintenant si vous allez sur la page d'accueil ``http://symblog.dev/app_dev.php/`` et cliquez sur un des titres des articles, vous verrez que le slug des titres des articles est maintenant présent à la fin de l'URL.
+Maintenant si vous allez sur la page d'accueil ``http://symblog.dev/app_dev.php/`` et cliquez sur un des titres des articles, vous verrez que le slug des titres des articles est maintenant prÃ©sent Ã  la fin de l'URL.
 
 Environnements
 ------------
 
-Les environnements sont à la fois une fonctionnalité très simple et très puissante de Symfony2.  Vous n'en êtes peut être pas conscient, mais vous vous en servez depuis le tout premier chapitre de ce tutoriel. Avec les environnements, on peut configurer différents aspects de Symfony2 et de l'application pour qu'elle tourne différemment selon des besoins spécifiques au cours du cycle de vie de l'application. Par défaut, Symfony2 est configuré avec 3 environnement :
+Les environnements sont Ã  la fois une fonctionnalitÃ© trÃ¨s simple et trÃ¨s puissante de Symfony2.  Vous n'en Ãªtes peut Ãªtre pas conscient, mais vous vous en servez depuis le tout premier chapitre de ce tutoriel. Avec les environnements, on peut configurer diffÃ©rents aspects de Symfony2 et de l'application pour qu'elle tourne diffÃ©remment selon des besoins spÃ©cifiques au cours du cycle de vie de l'application. Par dÃ©faut, Symfony2 est configurÃ© avec 3 environnement :
 
 1. ``dev`` - Developpement
 2. ``test`` - Test
 3. ``prod`` - Production
 
-Le rôle de ces environnements est inclus dans leur nom. Lorsque l'on développe une application, il est utile d'avoir la barre de débug à l'acran afin d'avoir des erreurs et des exceptions détaillées, alors qu'en production on ne veut rien de tout cela. En fait, afficher ces informations serait même une faille de sécurité car de nombreux détails relatifs au comportement interne de l'application et du serveur seraient disponibles. En production, il serait plus judicieux d'afficher des pages d'erreur personnalisées avec des messages simples, tout en stockant discrètement les messages d'erreurs dans un fichier log. Il peut également être utile d'activer le cache afin que l'application tourne au maximum de ses capacités. En débug, l'activer serait un véritable cauchemar car il faudrait vider le cache à chaque modification ou presque, ce qui fait au final perdre plus de temps qu'il n'en fait gagner et peut être source d'erreurs.
+Le rÃ´le de ces environnements est inclus dans leur nom. Lorsque l'on dÃ©veloppe une application, il est utile d'avoir la barre de dÃ©bug Ã  l'acran afin d'avoir des erreurs et des exceptions dÃ©taillÃ©es, alors qu'en production on ne veut rien de tout cela. En fait, afficher ces informations serait mÃªme une faille de sÃ©curitÃ© car de nombreux dÃ©tails relatifs au comportement interne de l'application et du serveur seraient disponibles. En production, il serait plus judicieux d'afficher des pages d'erreur personnalisÃ©es avec des messages simples, tout en stockant discrÃ¨tement les messages d'erreurs dans un fichier log. Il peut Ã©galement Ãªtre utile d'activer le cache afin que l'application tourne au maximum de ses capacitÃ©s. En dÃ©bug, l'activer serait un vÃ©ritable cauchemar car il faudrait vider le cache Ã  chaque modification ou presque, ce qui fait au final perdre plus de temps qu'il n'en fait gagner et peut Ãªtre source d'erreurs.
 
-Le dernier environnement, c'est l'environnement de test. Il est utilisé pour effectuer des tests sur l'application, tel que des tests unitaires ou fonctionnels. Nous n'avons pas parlé des tests pour le moment, mais ils seront abordés en détails dans le chapitre suivant.
+Le dernier environnement, c'est l'environnement de test. Il est utilisÃ© pour effectuer des tests sur l'application, tel que des tests unitaires ou fonctionnels. Nous n'avons pas parlÃ© des tests pour le moment, mais ils seront abordÃ©s en dÃ©tails dans le chapitre suivant.
 
 Controlleur de facade
 ~~~~~~~~~~~~~~~~~~~~~
 
-Pour le moment dans ce tutoriel, nous avons uniquement utilisé l'environnement de ``développement``, ce qui nous avons précisé en utilisant le controlleur de facade ``app_dev.php`` lorsque nous avons fait des requêtes vers symblog, par exemple ``http://symblog.dev/app_dev.php/about``. 
-Si vous regardez le contenu du controlleur de facade de l'environnement de développement dans ``web/app_dev.php``, vous y verrez la ligne suivante :
+Pour le moment dans ce tutoriel, nous avons uniquement utilisÃ© l'environnement de ``dÃ©veloppement``, ce qui nous avons prÃ©cisÃ© en utilisant le controlleur de facade ``app_dev.php`` lorsque nous avons fait des requÃªtes vers symblog, par exemple ``http://symblog.dev/app_dev.php/about``. 
+Si vous regardez le contenu du controlleur de facade de l'environnement de dÃ©veloppement dans ``web/app_dev.php``, vous y verrez la ligne suivante :
 
 .. code-block:: php
 
     $kernel = new AppKernel('dev', true);
 
-Cette ligne est celle qui fait démarrer Symfony2. Elle crée une nouvelle instance de l'``AppKernel`` de Symfony2, et opte pour l'environnement ``dev``.
+Cette ligne est celle qui fait dÃ©marrer Symfony2. Elle crÃ©e une nouvelle instance de l'``AppKernel`` de Symfony2, et opte pour l'environnement ``dev``.
 
-En comparaison, si vous regardez le controlleur de façade de l'environnement de ``production`` dans ``web/app.php``, vous y verrez :
+En comparaison, si vous regardez le controlleur de faÃ§ade de l'environnement de ``production`` dans ``web/app.php``, vous y verrez :
 
 .. code-block:: php
 
     $kernel = new AppKernel('prod', false);
 
-Vous pouvez voir que l'environnement  ``prod`` est fourni en paramètre à l'``AppKernel`` dans cette instance.
+Vous pouvez voir que l'environnement  ``prod`` est fourni en paramÃ¨tre Ã  l'``AppKernel`` dans cette instance.
 
-L'environnement de test n'a pas de controlleur de façade, car il n'est pas censé être utilisé dans un navigateur. C'est pourquoi il n'y a pas de fichier ``app_test.php``.
+L'environnement de test n'a pas de controlleur de faÃ§ade, car il n'est pas censÃ© Ãªtre utilisÃ© dans un navigateur. C'est pourquoi il n'y a pas de fichier ``app_test.php``.
 
-Paramètres de configuration
+ParamÃ¨tres de configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Nous avons vu plus haut comment les controlleurs de façade sont utilisés pour changer l'environnement dans lequel l'application tourne. Nous allons maintenant regarder comment les différents paramètres sont modifiés lorsque l'on utilise tel ou tel environnement. Si vous regardez les fichiers dans ``app/config``, vous y verrez plusieurs fichiers ``config.yml``. Plus précisémment, il y a un fichier de configuration principal, ``config.yml``, et 3 autres qui sont suffixés du nom de l'environnement; ``config_dev.yml``, ``config_test.yml`` et ``config_prod.yml``.
-Chacun de ces fichiers est chargé selon l'environnement courant. Si nous ouvrons le fichier ``config_dev.yml``, nous y verrons les lignes suivantes en entête :
+Nous avons vu plus haut comment les controlleurs de faÃ§ade sont utilisÃ©s pour changer l'environnement dans lequel l'application tourne. Nous allons maintenant regarder comment les diffÃ©rents paramÃ¨tres sont modifiÃ©s lorsque l'on utilise tel ou tel environnement. Si vous regardez les fichiers dans ``app/config``, vous y verrez plusieurs fichiers ``config.yml``. Plus prÃ©cisÃ©mment, il y a un fichier de configuration principal, ``config.yml``, et 3 autres qui sont suffixÃ©s du nom de l'environnement; ``config_dev.yml``, ``config_test.yml`` et ``config_prod.yml``.
+Chacun de ces fichiers est chargÃ© selon l'environnement courant. Si nous ouvrons le fichier ``config_dev.yml``, nous y verrons les lignes suivantes en entÃªte :
 
 .. code-block:: yaml
 
     imports:
         - { resource: config.yml }
 
-La directive ``imports`` va permettre d'importer le contenu du fichier ``config.yml`` à l'intérieur de celui là. La même directive ``import`` peut être trouvée au début des 2 autres fichiers de configuration ``config_test.yml`` et ``config_prod.yml``. 
-L'inclusion d'un ensemble commun de paramètres de configuration définis dans ``config.yml`` permet d'avoir des valeurs spécifiques pour ces paramètres selon les environnements. On peut voir dans le fichier de configuration de l'environnement de développement ``app/config/config_dev.yml`` les lignes suivantes, qui configurent l'utilisation de la barre de débug :
+La directive ``imports`` va permettre d'importer le contenu du fichier ``config.yml`` Ã  l'intÃ©rieur de celui lÃ . La mÃªme directive ``import`` peut Ãªtre trouvÃ©e au dÃ©but des 2 autres fichiers de configuration ``config_test.yml`` et ``config_prod.yml``. 
+L'inclusion d'un ensemble commun de paramÃ¨tres de configuration dÃ©finis dans ``config.yml`` permet d'avoir des valeurs spÃ©cifiques pour ces paramÃ¨tres selon les environnements. On peut voir dans le fichier de configuration de l'environnement de dÃ©veloppement ``app/config/config_dev.yml`` les lignes suivantes, qui configurent l'utilisation de la barre de dÃ©bug :
 
 .. code-block:: yaml
 
@@ -814,18 +814,18 @@ L'inclusion d'un ensemble commun de paramètres de configuration définis dans ``c
     web_profiler:
         toolbar: true
 
-Ce paramètre est absent dans le fichier de configuration de l'environnement de production car nous ne voulons pas que la barre d'outils soit affichée.
+Ce paramÃ¨tre est absent dans le fichier de configuration de l'environnement de production car nous ne voulons pas que la barre d'outils soit affichÃ©e.
 
 Fonctionner en production
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Nous allons maintenant voir notre site tourner dans l'environnement de production. Pour cela, il faut tout d'abord vider le cache, à l'aide d'une commande Symfony2 :
+Nous allons maintenant voir notre site tourner dans l'environnement de production. Pour cela, il faut tout d'abord vider le cache, Ã  l'aide d'une commande Symfony2 :
 
 .. code-block:: bash
 
     $ php app/console cache:clear --env=prod
 
-Maintenant rendez vous à l'adresse ``http://symblog.dev/``. Remarquez qu'il manque le controlleur de façade ``app_dev.php``.
+Maintenant rendez vous Ã  l'adresse ``http://symblog.dev/``. Remarquez qu'il manque le controlleur de faÃ§ade ``app_dev.php``.
 
 .. note::
     
@@ -839,68 +839,68 @@ Maintenant rendez vous à l'adresse ``http://symblog.dev/``. Remarquez qu'il manq
         </IfModule>
         
 
-Vous allez remarquer que le site est presque identique, mais un certain nombre d'éléments sont différents. La barre de débug a disparue et les messages d'erreur détaillés ne sont plus affichés : essayez de vous rendre à l'adresse ``http://symblog.dev/999`` pour vous en assurer.
+Vous allez remarquer que le site est presque identique, mais un certain nombre d'Ã©lÃ©ments sont diffÃ©rents. La barre de dÃ©bug a disparue et les messages d'erreur dÃ©taillÃ©s ne sont plus affichÃ©s : essayez de vous rendre Ã  l'adresse ``http://symblog.dev/999`` pour vous en assurer.
 
 .. image:: /_static/images/part_5/production_error.jpg
     :align: center
     :alt: Production - Erreur 404
     
-Les messages d'exceptions détaillés ont été remplaces par un message plus simple, qui informe l'utilisateur qu'un problème a eu lieu. Ces écrans d'exceptions peuvent être configurés pour s'accorder avec le thème visuel de votre application. Nous reviendrons sur ce sujet dans un futur chapitre.
+Les messages d'exceptions dÃ©taillÃ©s ont Ã©tÃ© remplaces par un message plus simple, qui informe l'utilisateur qu'un problÃ¨me a eu lieu. Ces Ã©crans d'exceptions peuvent Ãªtre configurÃ©s pour s'accorder avec le thÃ¨me visuel de votre application. Nous reviendrons sur ce sujet dans un futur chapitre.
 
-Vous pouvez également remarquer que le fichier ``app/logs/prod.log`` se remplit avec des informations sur l'exécution de l'application. C'est un aspect intéressant lorsque vous aurez des problèmes en production mais qu'il n'y aura plus les erreurs et exceptions de l'environnement de développement.
+Vous pouvez Ã©galement remarquer que le fichier ``app/logs/prod.log`` se remplit avec des informations sur l'exÃ©cution de l'application. C'est un aspect intÃ©ressant lorsque vous aurez des problÃ¨mes en production mais qu'il n'y aura plus les erreurs et exceptions de l'environnement de dÃ©veloppement.
 
 .. tip::
 
-    Comment la requête depuis ``http://symblog.dev/`` a réussi à emmener jusqu'au fichier ``app.php``? Je suis sûr que vous avez tous déjà créé des fichiers tels que ``index.html`` et ``index.php`` comme index de sites, mais ``app.php`` est moins courant; c'est grâce à une des règles du fichier ``web/.htaccess`` :
+    Comment la requÃªte depuis ``http://symblog.dev/`` a rÃ©ussi Ã  emmener jusqu'au fichier ``app.php``? Je suis sÃ»r que vous avez tous dÃ©jÃ  crÃ©Ã© des fichiers tels que ``index.html`` et ``index.php`` comme index de sites, mais ``app.php`` est moins courant; c'est grÃ¢ce Ã  une des rÃ¨gles du fichier ``web/.htaccess`` :
 
     .. code-block:: text
 
         RewriteRule ^(.*)$ app.php [QSA,L]
 
-    On peut voir que cette line contient une expression régulière qui associe n'importe quel texte via ``^(.*)$`` et le fournit à ``app.php``.
+    On peut voir que cette line contient une expression rÃ©guliÃ¨re qui associe n'importe quel texte via ``^(.*)$`` et le fournit Ã  ``app.php``.
 
-    Vous êtes peut être sur un serveur Apache qui ne dispose pas de ``mod_rewrite.c`` activé. Dans ce cas, vous pouvez simplement ajouter ``app.php`` à l'URL, tel que ``http://symblog.dev/app.php/``.
+    Vous Ãªtes peut Ãªtre sur un serveur Apache qui ne dispose pas de ``mod_rewrite.c`` activÃ©. Dans ce cas, vous pouvez simplement ajouter ``app.php`` Ã  l'URL, tel que ``http://symblog.dev/app.php/``.
 
-Bien que nous ayions couvert les bases de l'environnement de production, nous n'avons pas parlé de plusieurs éléments liés à l'environnement de production, tel que la personnalisation des pages d'erreurs et le déploiement vers un serveur de production à l'aide d'outils tel que `capifony <http://capifony.org/>`_. Nous reviendrons plus tard sur ces sujets dans un chapitre ultérieur.
+Bien que nous ayions couvert les bases de l'environnement de production, nous n'avons pas parlÃ© de plusieurs Ã©lÃ©ments liÃ©s Ã  l'environnement de production, tel que la personnalisation des pages d'erreurs et le dÃ©ploiement vers un serveur de production Ã  l'aide d'outils tel que `capifony <http://capifony.org/>`_. Nous reviendrons plus tard sur ces sujets dans un chapitre ultÃ©rieur.
 
-Création de nouveaux environnements
+CrÃ©ation de nouveaux environnements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Il est enfin intéressant de savoir que vous pouvez créer vos propres environnements facilement dans Symfony2. Par exemple, vous pouvez avoir envie d'avoir un environnement qui tourne sur le serveur de production mais affiche certaines informations de débug tel que les exceptions. Cela permettrait à la plateforme d'être testée manuellement sur le serveur de production, car les configurations des serveurs de développement et de production peuvent (et c'est souvent le cas) être différentes.
+Il est enfin intÃ©ressant de savoir que vous pouvez crÃ©er vos propres environnements facilement dans Symfony2. Par exemple, vous pouvez avoir envie d'avoir un environnement qui tourne sur le serveur de production mais affiche certaines informations de dÃ©bug tel que les exceptions. Cela permettrait Ã  la plateforme d'Ãªtre testÃ©e manuellement sur le serveur de production, car les configurations des serveurs de dÃ©veloppement et de production peuvent (et c'est souvent le cas) Ãªtre diffÃ©rentes.
 
-Bien que la création d'un nouvel environnement soit une tâche simple, elle va au delà du cadre de ce tutoriel. Il y a un excellent article
+Bien que la crÃ©ation d'un nouvel environnement soit une tÃ¢che simple, elle va au delÃ  du cadre de ce tutoriel. Il y a un excellent article
 `article <http://symfony.com/doc/current/cookbook/configuration/environments.html>`_ dans le livre de recettes de Symfony2 qui couvre ce sujet.
 
 Assetic
 -------
 
-La distribution standard de Symfony2 est accompagnée d'une librairie de gestion des fichiers externes (les assets) appelée `Assetic <https://github.com/kriswallsmith/assetic>`_. Cette librairie a été développée par `Kris Wallsmith <https://twitter.com/#!/kriswallsmith>`_ et a été inspirée par la librairie Python `webassets
+La distribution standard de Symfony2 est accompagnÃ©e d'une librairie de gestion des fichiers externes (les assets) appelÃ©e `Assetic <https://github.com/kriswallsmith/assetic>`_. Cette librairie a Ã©tÃ© dÃ©veloppÃ©e par `Kris Wallsmith <https://twitter.com/#!/kriswallsmith>`_ et a Ã©tÃ© inspirÃ©e par la librairie Python `webassets
 <http://elsdoerfer.name/files/docs/webassets/>`_.
 
 
-Assetic se charge de 2 aspects de la gestion des fichiers externes, les assets tels que images, feuilles de style ou fichiers JavaScript, et les filtres qui peuvent être appliqués sur ces assets. Ces filtre permettent de réaliser des tâches utiles tel que la minification des fichiers CSS ou JavaScript, ou bien passer les fichiers `CoffeeScript <http://jashkenas.github.com/coffee-script/>`_ à travers un compilateur, et comibiner les assets ensemble afin de réduire le nombre de requêtes HTTP faites vers le serveur.
+Assetic se charge de 2 aspects de la gestion des fichiers externes, les assets tels que images, feuilles de style ou fichiers JavaScript, et les filtres qui peuvent Ãªtre appliquÃ©s sur ces assets. Ces filtre permettent de rÃ©aliser des tÃ¢ches utiles tel que la minification des fichiers CSS ou JavaScript, ou bien passer les fichiers `CoffeeScript <http://jashkenas.github.com/coffee-script/>`_ Ã  travers un compilateur, et comibiner les assets ensemble afin de rÃ©duire le nombre de requÃªtes HTTP faites vers le serveur.
 
-Nous avons jusqu'à présent utilisé la fonction Twig ``asset`` afin d'inclure les fichiers externes, de la manière suivante :
+Nous avons jusqu'Ã  prÃ©sent utilisÃ© la fonction Twig ``asset`` afin d'inclure les fichiers externes, de la maniÃ¨re suivante :
 
 .. code-block:: html
     
     <link href="{{ asset('bundles/bloggerblog/css/blog.css') }}" type="text/css" rel="stylesheet" />
 
-Ces appels à la fonction ``asset`` vont être remplacés par Assetic.
+Ces appels Ã  la fonction ``asset`` vont Ãªtre remplacÃ©s par Assetic.
 
 Assets
 ~~~~~~
 
-La librairie Assetic décrit un asset de la manière suivante :
+La librairie Assetic dÃ©crit un asset de la maniÃ¨re suivante :
 
-`Un asset Assetic est quelquechose avec un contenu filtrable qui peut être chargé et déchargé. Cela inclus également les métadonnées, certaines pouvant être manipulées et certaines étant fixées.`
+`Un asset Assetic est quelquechose avec un contenu filtrable qui peut Ãªtre chargÃ© et dÃ©chargÃ©. Cela inclus Ã©galement les mÃ©tadonnÃ©es, certaines pouvant Ãªtre manipulÃ©es et certaines Ã©tant fixÃ©es.`
 
 Plus simplement, les assets sont des ressources que l'application utilise tel que les feuilles de style et les images.
 
 Feuilles de style
 .................
 
-Commençons par remplacer les appels actuels à la fonction ``asset`` pour les feuilles de styles dans le template principal du  ``BloggerBlogBundle``. Mettez à jour le contenu du template situé dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` avec ce qui suit :
+CommenÃ§ons par remplacer les appels actuels Ã  la fonction ``asset`` pour les feuilles de styles dans le template principal du  ``BloggerBlogBundle``. Mettez Ã  jour le contenu du template situÃ© dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` avec ce qui suit :
 
 .. code-block:: html
     
@@ -920,7 +920,7 @@ Commençons par remplacer les appels actuels à la fonction ``asset`` pour les feu
     
     {# .. #}
 
-Nous avons remplacé les 2 précédents liens vers les fichiers CSS avec des fonctionnalités Assetic. En utilisant ``stylesheets`` depuis Assetic, nous avons précisé que toutes les feuilles de style dans ``src/Blogger/BlogBundle/Resources/public/css`` doivent être combinées en un fichier avant d'être incluses. Combiner plusieurs fichiers est une manière simple mais efficace d'opitmiser le nombre de fichiers nécessaires à votre site web. Moins de fichiers signifie moins de requêtes HTTP vers le serveur. Bien que nous ayons utilisé ``*`` pour préciser tous les fichiers du répertoire ``css``, nous aurions également pu lister chaque fichier individuellement :
+Nous avons remplacÃ© les 2 prÃ©cÃ©dents liens vers les fichiers CSS avec des fonctionnalitÃ©s Assetic. En utilisant ``stylesheets`` depuis Assetic, nous avons prÃ©cisÃ© que toutes les feuilles de style dans ``src/Blogger/BlogBundle/Resources/public/css`` doivent Ãªtre combinÃ©es en un fichier avant d'Ãªtre incluses. Combiner plusieurs fichiers est une maniÃ¨re simple mais efficace d'opitmiser le nombre de fichiers nÃ©cessaires Ã  votre site web. Moins de fichiers signifie moins de requÃªtes HTTP vers le serveur. Bien que nous ayons utilisÃ© ``*`` pour prÃ©ciser tous les fichiers du rÃ©pertoire ``css``, nous aurions Ã©galement pu lister chaque fichier individuellement :
 
 .. code-block:: html
     
@@ -941,16 +941,16 @@ Nous avons remplacé les 2 précédents liens vers les fichiers CSS avec des foncti
 
     {# .. #}
     
-Le résultat final dans les 2 cas est le même. La première option qui utilise ``*`` assure que les nouveaux fichiers CSS ajoutés dans le répertoire seront ajoutés et combinés dans le fichier CSS d'Assetic. Cela n'est toutefois pas forcément le comportement que l'on souhaite avoir, donc utilisez l'une ou l'autre des méthodes selon vos besoins.
+Le rÃ©sultat final dans les 2 cas est le mÃªme. La premiÃ¨re option qui utilise ``*`` assure que les nouveaux fichiers CSS ajoutÃ©s dans le rÃ©pertoire seront ajoutÃ©s et combinÃ©s dans le fichier CSS d'Assetic. Cela n'est toutefois pas forcÃ©ment le comportement que l'on souhaite avoir, donc utilisez l'une ou l'autre des mÃ©thodes selon vos besoins.
     
-Si vous regardez la sortie HTML via ``http://symblog.dev/app_dev.php/``, vous verrez que les fichiers CSS ont été inclus de la manière suivante (remarquez que nous sommes retourné dans l'environnement de développement).
+Si vous regardez la sortie HTML via ``http://symblog.dev/app_dev.php/``, vous verrez que les fichiers CSS ont Ã©tÃ© inclus de la maniÃ¨re suivante (remarquez que nous sommes retournÃ© dans l'environnement de dÃ©veloppement).
 
 .. code-block:: html
     
     <link href="/app_dev.php/css/d8f44a4_part_1_blog_1.css" rel="stylesheet" media="screen" />
     <link href="/app_dev.php/css/d8f44a4_part_1_sidebar_2.css" rel="stylesheet" media="screen" />
 
-Au premier abord, vous vous demandez peut être quels sont ces 2 fichiers, car nous avons dit plus haut qu'Assetic combinerait les fichiers en 1 fichier. C'est parce que nous sommes dans l'environnement de ``developpement``. On peut demander à Assetic de fonctionner en mode non débug We can ask Assetic to run in non-debug mode en mettant le paramètre ``debug`` à false de la manière suivante :
+Au premier abord, vous vous demandez peut Ãªtre quels sont ces 2 fichiers, car nous avons dit plus haut qu'Assetic combinerait les fichiers en 1 fichier. C'est parce que nous sommes dans l'environnement de ``developpement``. On peut demander Ã  Assetic de fonctionner en mode non dÃ©bug We can ask Assetic to run in non-debug mode en mettant le paramÃ¨tre ``debug`` Ã  false de la maniÃ¨re suivante :
 
 .. code-block:: html
 
@@ -973,7 +973,7 @@ Si vous regardez maintenant le HTML, vous y verrez ceci :
 
     <link href="/app_dev.php/css/3c7da45.css" rel="stylesheet" media="screen" />
 
-Si vous regardez le contenu de ce fichier, vous verrez que les 2 fichiers CSS ``blog.css`` et ``sidebar.css`` ont été combinés en 1 fichier. Le nom de fichier utilisé pour le fichier généré est produit aléatoirement par Assetic. Si vous voulez controller le nom du fichier généré, utilisez l'option ``output`` comme suit :
+Si vous regardez le contenu de ce fichier, vous verrez que les 2 fichiers CSS ``blog.css`` et ``sidebar.css`` ont Ã©tÃ© combinÃ©s en 1 fichier. Le nom de fichier utilisÃ© pour le fichier gÃ©nÃ©rÃ© est produit alÃ©atoirement par Assetic. Si vous voulez controller le nom du fichier gÃ©nÃ©rÃ©, utilisez l'option ``output`` comme suit :
 
 .. code-block:: html
 
@@ -984,9 +984,9 @@ Si vous regardez le contenu de ce fichier, vous verrez que les 2 fichiers CSS ``
         <link href="{{ asset_url }}" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 
-Avant de continuer, supprimez le paramètre ``debug`` de l'exemple précédent, car nous voulons revenir au comportement par défaut sur les assets.
+Avant de continuer, supprimez le paramÃ¨tre ``debug`` de l'exemple prÃ©cÃ©dent, car nous voulons revenir au comportement par dÃ©faut sur les assets.
 
-Nous devons également mettre à jour le template de base de l'application, dans ``app/Resources/views/base.html.twig``.
+Nous devons Ã©galement mettre Ã  jour le template de base de l'application, dans ``app/Resources/views/base.html.twig``.
 
 .. code-block:: html
 
@@ -1009,7 +1009,7 @@ Nous devons également mettre à jour le template de base de l'application, dans `
 JavaScripts
 ...........
 
-Bien que nous n'ayions pas actuellement de fichiers JavaScript dans notre application, leur utilisation via Assetic est très semblable à celle des feuilles de style :
+Bien que nous n'ayions pas actuellement de fichiers JavaScript dans notre application, leur utilisation via Assetic est trÃ¨s semblable Ã  celle des feuilles de style :
 
 .. code-block:: html
 
@@ -1022,23 +1022,23 @@ Bien que nous n'ayions pas actuellement de fichiers JavaScript dans notre applic
 Filtres
 ~~~~~~~
 
-La vrai puissance d'Assetic vient de ses filtres. Les filtres peuvent être appliqués à des assets ou à un ensemble d'assets. Il y a un grand nombre de filtres à l'intérieur de la librairie de base, qui réalisent les taches courantes suivantes :
+La vrai puissance d'Assetic vient de ses filtres. Les filtres peuvent Ãªtre appliquÃ©s Ã  des assets ou Ã  un ensemble d'assets. Il y a un grand nombre de filtres Ã  l'intÃ©rieur de la librairie de base, qui rÃ©alisent les taches courantes suivantes :
 
 1. ``CssMinFilter``: minifaction de la CSS
 2. ``JpegoptimFilter``: optimisation des fichiers JPEGs
-3. ``Yui\CssCompressorFilter``: compression de fichiers CSS à l'aide de l'outil YUI compressor
-4. ``Yui\JsCompressorFilter``: compression de fichiers  JavaScript à l'aide de l'outil YUI compressor
+3. ``Yui\CssCompressorFilter``: compression de fichiers CSS Ã  l'aide de l'outil YUI compressor
+4. ``Yui\JsCompressorFilter``: compression de fichiers  JavaScript Ã  l'aide de l'outil YUI compressor
 5. ``CoffeeScriptFilter``: compile CoffeeScript en JavaScript
 
-Une liste complète des filtres disponible se trouve dans le 
+Une liste complÃ¨te des filtres disponible se trouve dans le 
 `Readme Assetic <https://github.com/kriswallsmith/assetic/blob/master/README.md>`_.
 
-Plusieurs de ces filtres passent en fait la main à un autre programme ou à une autre librairie, tel que YUI Compressor, donc il est possible que vous ayiez à installer ou configurer les librairies nécessaires pour utiliser certains filtres.
+Plusieurs de ces filtres passent en fait la main Ã  un autre programme ou Ã  une autre librairie, tel que YUI Compressor, donc il est possible que vous ayiez Ã  installer ou configurer les librairies nÃ©cessaires pour utiliser certains filtres.
 
-Téléchargez `YUI Compressor <http://yuilibrary.com/download/yuicompressor/>`_, décompressez l'archive et copiez les fichiers du répertoire ``build`` dans
-``app/Resources/java/yuicompressor-2.4.6.jar``. Cela suppose que vous ayiez téléchargé la version ``2.4.6``, sinon changez le numéro de version en conséquences.
+TÃ©lÃ©chargez `YUI Compressor <http://yuilibrary.com/download/yuicompressor/>`_, dÃ©compressez l'archive et copiez les fichiers du rÃ©pertoire ``build`` dans
+``app/Resources/java/yuicompressor-2.4.6.jar``. Cela suppose que vous ayiez tÃ©lÃ©chargÃ© la version ``2.4.6``, sinon changez le numÃ©ro de version en consÃ©quences.
 
-Nous allons ensuite configurer un filtre Assetic pour minifier la CSS à l'aide de YUI Compressor. Mettez à jour la configuration de l'application dans  ``app/config/config.yml`` avec le contenu suivant :
+Nous allons ensuite configurer un filtre Assetic pour minifier la CSS Ã  l'aide de YUI Compressor. Mettez Ã  jour la configuration de l'application dans  ``app/config/config.yml`` avec le contenu suivant :
 
 .. code-block:: yaml
     
@@ -1053,7 +1053,7 @@ Nous allons ensuite configurer un filtre Assetic pour minifier la CSS à l'aide d
     
     # ..
     
-Nous venons de configurer un filtre ``yui_css`` qui va utiliser l'exécutable Java de l'outil YUI Compressor, que nous allons placer dans le répertoire des ressources de l'application. Afin d'utiliser ce filtre, il faut lui préciser avec quels assets s'en servir. Mettez à jour le template dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` pour utiliser le filtre ``yui_css``.
+Nous venons de configurer un filtre ``yui_css`` qui va utiliser l'exÃ©cutable Java de l'outil YUI Compressor, que nous allons placer dans le rÃ©pertoire des ressources de l'application. Afin d'utiliser ce filtre, il faut lui prÃ©ciser avec quels assets s'en servir. Mettez Ã  jour le template dans ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` pour utiliser le filtre ``yui_css``.
 
 .. code-block:: html
 
@@ -1071,7 +1071,7 @@ Nous venons de configurer un filtre ``yui_css`` qui va utiliser l'exécutable Jav
 
     {# .. #}
 
-Si vous rafraichissez la page d'accueil du site Symblog et regardez les fichiers générés par Assetic, vous verrez qu'ils ont été minifiés. Bien que la minification soit une bonne idée sur un serveur de production, elle peut rendre le débuggage difficile, en particulier lorsque le Javascript est minifié. On peut la désactiver pour l'environnement ``development`` en préfixant le filtre avec un  ``?`` de la manière suivante.
+Si vous rafraichissez la page d'accueil du site Symblog et regardez les fichiers gÃ©nÃ©rÃ©s par Assetic, vous verrez qu'ils ont Ã©tÃ© minifiÃ©s. Bien que la minification soit une bonne idÃ©e sur un serveur de production, elle peut rendre le dÃ©buggage difficile, en particulier lorsque le Javascript est minifiÃ©. On peut la dÃ©sactiver pour l'environnement ``development`` en prÃ©fixant le filtre avec un  ``?`` de la maniÃ¨re suivante.
 
 .. code-block:: html
     
@@ -1083,25 +1083,25 @@ Si vous rafraichissez la page d'accueil du site Symblog et regardez les fichiers
         <link href="{{ asset_url }}" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 
-Génération des assets pour la production
+GÃ©nÃ©ration des assets pour la production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-En production, on peut générer les fichiers d'assets grâce à Assetic afin qu'ils deviennent de vrais fichiers prêts à être utilisés sur le serveur web. Le processus de création des assets avec Assetic pour chaque adresse peut être assez long, en particulier si des filtres sont appliqués aux assets. Le sauvegarder de manière définitive pour la production assure qu'Assetic ne sera pas utilisé pour manipuler les assets, mais seulement pour fournir les assets pré-traités. Lancez la commande suivante pour conserver les fichiers assets traités sur le disque :
+En production, on peut gÃ©nÃ©rer les fichiers d'assets grÃ¢ce Ã  Assetic afin qu'ils deviennent de vrais fichiers prÃªts Ã  Ãªtre utilisÃ©s sur le serveur web. Le processus de crÃ©ation des assets avec Assetic pour chaque adresse peut Ãªtre assez long, en particulier si des filtres sont appliquÃ©s aux assets. Le sauvegarder de maniÃ¨re dÃ©finitive pour la production assure qu'Assetic ne sera pas utilisÃ© pour manipuler les assets, mais seulement pour fournir les assets prÃ©-traitÃ©s. Lancez la commande suivante pour conserver les fichiers assets traitÃ©s sur le disque :
 
 .. code-block:: bash
 
     $ app/console --env=prod assetic:dump
 
-Vous pouvez remarquer que plusieurs fichiers CSS ont été générés dans le répertoire ``web/css``. Si vous lancez Symblog dans l'environnement de production, vous verrez que les fichiers proviennent directement de ce répertoire.
+Vous pouvez remarquer que plusieurs fichiers CSS ont Ã©tÃ© gÃ©nÃ©rÃ©s dans le rÃ©pertoire ``web/css``. Si vous lancez Symblog dans l'environnement de production, vous verrez que les fichiers proviennent directement de ce rÃ©pertoire.
 
 .. note::
 
-    Si vous stockez les fichiers assets sur le disque mais souhaitez retourner dans l'environnement de développement, vous devrez supprimer les fichiers créé dans le répertoire  ``web/`` pour permettre à Assetic de les recréer.
+    Si vous stockez les fichiers assets sur le disque mais souhaitez retourner dans l'environnement de dÃ©veloppement, vous devrez supprimer les fichiers crÃ©Ã© dans le rÃ©pertoire  ``web/`` pour permettre Ã  Assetic de les recrÃ©er.
 
 Lecture additionnelle    
 ~~~~~~~~~~~~~~~~~~~~~
 
-Nous avons seulement abordé une fraction des possibilités offertes par Assetic. Il y a plus de ressources en ligne, en particulier dans le livre de recettes de Symfony2, en particulier (mais en anglais) :
+Nous avons seulement abordÃ© une fraction des possibilitÃ©s offertes par Assetic. Il y a plus de ressources en ligne, en particulier dans le livre de recettes de Symfony2, en particulier (mais en anglais) :
 
 `How to Use Assetic for Asset Management <http://symfony.com/doc/current/cookbook/assetic/asset_management.html>`_
 
@@ -1111,7 +1111,7 @@ Nous avons seulement abordé une fraction des possibilités offertes par Assetic. 
 
 `How to Apply an Assetic Filter to a Specific File Extension <http://symfony.com/doc/current/cookbook/assetic/apply_to_option.html>`_
 
-Il y a également plusieurs bons articles de `Richard Miller <https://twitter.com/#!/mr_r_miller>`_ tel que :
+Il y a Ã©galement plusieurs bons articles de `Richard Miller <https://twitter.com/#!/mr_r_miller>`_ tel que :
 
 `Symfony2: Using CoffeeScript with Assetic <http://miller.limethinking.co.uk/2011/05/16/symfony2-using-coffeescript-with-assetic/>`_
 
@@ -1121,11 +1121,11 @@ Il y a également plusieurs bons articles de `Richard Miller <https://twitter.com
 
 .. tip::
 
-    Il est à noter également que Richard Miller a également de nombreux articles très intéressant dans de nombreux dommaines de Symfony2, tel que l'injection de dépendances, les services ainsi que les déjà mentionnés guides sur Assetic. Cherchez les articles taggés avec `symfony2 <http://miller.limethinking.co.uk/tag/symfony2/>`_
+    Il est Ã  noter Ã©galement que Richard Miller a Ã©galement de nombreux articles trÃ¨s intÃ©ressant dans de nombreux dommaines de Symfony2, tel que l'injection de dÃ©pendances, les services ainsi que les dÃ©jÃ  mentionnÃ©s guides sur Assetic. Cherchez les articles taggÃ©s avec `symfony2 <http://miller.limethinking.co.uk/tag/symfony2/>`_
 
 Conclusion
 ----------
 
-Nous avons couvert plusieurs nouveaux dommaines de Symfony2, tel que les environnements et comment utiliser la librairie Assetic. Nous avons également amélioré la page d'accueil, et ajouté plusieurs composants à la barre latérale.
+Nous avons couvert plusieurs nouveaux dommaines de Symfony2, tel que les environnements et comment utiliser la librairie Assetic. Nous avons Ã©galement amÃ©liorÃ© la page d'accueil, et ajoutÃ© plusieurs composants Ã  la barre latÃ©rale.
 
-Dans le prochain chapitre, nous aller passer aux tests. Nous parlerons à la fois des tests unitaires et des tests fonctionnels avec PHPUnit. Nous verrons comment Symfony2 aide grandement à l'écriture des tests avec plusieurs classes pour faciliter l'écriture des tests fonctionnels qui simulent des requêtes, permettre de remplir les formulaires, cliquent sur les liens et nous permettent d'inspecter les réponses obtenues.
+Dans le prochain chapitre, nous aller passer aux tests. Nous parlerons Ã  la fois des tests unitaires et des tests fonctionnels avec PHPUnit. Nous verrons comment Symfony2 aide grandement Ã  l'Ã©criture des tests avec plusieurs classes pour faciliter l'Ã©criture des tests fonctionnels qui simulent des requÃªtes, permettre de remplir les formulaires, cliquent sur les liens et nous permettent d'inspecter les rÃ©ponses obtenues.

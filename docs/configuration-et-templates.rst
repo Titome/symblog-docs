@@ -107,7 +107,7 @@ S'il s'agit de votre première visite sur la page d'accueil de Symfony2, prenez 
 Configurer Symfony2 : l'interface web
 ------------------------------------
 
-Symfony2 propose une interface web pour configurer divers aspects du site web tels que les paramètres de la base de donnée. Nous avons besoin d'une base de donnée pour ce projte, donc commençons par utiliser l'outil de configuration.
+Symfony2 propose une interface web pour configurer divers aspects du site web tels que les paramètres de la base de donnée. Nous avons besoin d'une base de donnée pour ce projet, donc commençons par utiliser l'outil de configuration.
 
 Rendez-vous à l'adresse ``http://symblog.dev/app_dev.php/`` et cliquez sur le bouton Configure. 
 Rentrez les détails pour paramétrer l'usage de votre base de données avec Symfony2 (ce tutorial suppose l'utilisation de MySQL, mais vous pouvez choisir n'importe quelle base de données à laquelle vous avez accès), suivi par la génération d'une clé CSRF sur la page suivante. Vous seront ensuite présentés les paramètres pour Symfony2 que l'application a généré pour vous. Faites attention à la remarque sur cette page, il y a des chances que votre fichier ``app/paramaters.ini`` ne soit pas accessible en écriture et que vous deviez copier/coller les paramètres dans ce fichier (Ces paramètres peuvent alors remplacer ceux déjà existants).

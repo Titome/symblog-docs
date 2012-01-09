@@ -4,7 +4,7 @@ Création d'un blog avec Symfony2
 Introduction
 ------------
 
-Ce tutoriel va vous guider dans le processus de création d’un blog complet avec `Symfony2 <http://symfony.com/>`_. La distribution standard du framework sera utilisée, qui inclut les principaux composants nécessaires à la création de vos propres sites web. Le tutoriel est découpé en plusieurs parties, qui couvrent chacune des aspects différents de Symfony2 et de ses composants. Il est prévu pour être utilisé de la même manière que `Jobeet <http://www.symfony-project.org/jobeet/1_4/Doctrine/en/>`_ pour Symfony 1.
+Ce tutoriel va vous guider dans le processus de création d’un blog complet avec `Symfony2 <http://symfony.com/>`_. La distribution standard du framework sera utilisée, qui inclut les principaux composants nécessaires à la création de vos propres sites web. Le tutoriel est découpé en plusieurs parties, qui couvrent chacune des aspects différents de Symfony2 et de ses composants. Il est prévu pour être utilisé de la même manière que `Jobeet <http://www.symfony-project.org/jobeet/1_4/Doctrine/fr/>`_ pour Symfony 1.
 
 
 Chapitres du tutoriel
@@ -18,7 +18,7 @@ Chapitres du tutoriel
     docs/doctrine-2-et-les-articles
     docs/maj-des-articles-ajout-de-commentaires
     docs/personnalisation-de-la-vue-twig-avance
-    
+    docs/tests-unitaires-et-fonctionels-phpunit.rst
 
 Site démo
 ---------
@@ -38,7 +38,7 @@ Le but de ce tutoriel est de couvrir les tâches que vous allez régulièrement 
     4.  Le modèle - Doctrine 2
     5.  Les migrations
     6.  Les données factices
-    7.  Les validateurrs
+    7.  Les validateurs
     8.  Les formulaires
     9.  Le routage
     10. Gestion des fichiers externes
