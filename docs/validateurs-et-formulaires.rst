@@ -326,7 +326,7 @@ Comme vous pouvez le voir, nous utilisons 4 nouvelles fonctions Twig pour affich
 
 La première fonction ``form_enctype`` définit le type de contenu du formulaire. C'est nécessaire lorsqu'un formulaire traite avec des fichiers uploadés. Ce n'est donc pas nécessaire pour le moment, mais c'est une bonne habitude que de l'utiliser pour tous les formulaires au cas où l'upload de fichiers soit ajouté dans le futur. Débugguer un formulaire qui traite de l'upload de fichier dans lequel le type de contenu n'est pas spécifié peut être un vrai casse tête !
 
-La seconde fonction ``form_errors`` va afficher les erreurs du formulaires si jamais la validation échoie.
+La seconde fonction ``form_errors`` va afficher les erreurs du formulaires si jamais la validation échoue.
 
 La 3ème fonction ``form_row`` affiche un élément lié à un des champs. Cela inclue les erreurs pour ce champ, l'étiquette liée au champ ainsi que l'objet du formulaire à afficher.
 
