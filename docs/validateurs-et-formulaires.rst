@@ -559,7 +559,7 @@ Une fois que la librairie Swift Mailer nous a permis de créer une instance d'un
 
 .. note::
 
-    Comme la librairie Swift Mailer n'utilise pas les espaces de noms, nous devons préfixer la classer avec avec un ``\``. Cela dit à PHP de réaliser l'échappement vers l' `espace global <http://www.php.net/manual/en/language.namespaces.global.php>`_.
+    Comme la librairie Swift Mailer n'utilise pas les espaces de noms, nous devons préfixer la classe avec avec un ``\``. Cela dit, à PHP de réaliser l'échappement vers l' `espace global <http://www.php.net/manual/en/language.namespaces.global.php>`_.
     Vous devrez préfixer tous les classes et fonctions qui ne sont pas dans un espace de nom avec un ``\``. Si vous ne placiez pas préfixe avant la classe ``Swift_Message``, PHP chercherait alors la classe dans l'espace de nom actuel, dans cet exemple ``Blogger\BlogBundle\Controller``, amenant ainsi à l'apparition d'une erreur, car la classe ne peut légitimement être trouvée.
 
 Nous avons également émis un message ``flash`` sur la session. Les messages flash sont des messages qui sont affichés seulement après une requête, après celà ils sont supprimés par Symfony2. Le message flash sera affiché dans le template actuel pour informer l'utilisateur que le message a été envoyé. Comme les messages flash sont seulement affichés pour une unique requête, ils sont parfaits pour notifier l'utilisateur de la réussite (ou l'échec) des actions précédentes.
