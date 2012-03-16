@@ -427,7 +427,7 @@ Mettons à jour notre route de contact dans ``src/Blogger/BlogBundle/Resources/c
 
 .. tip::
 
-    Vous vous demandez probablement pourquoi la route acceptait les requêtes de type HEAD, alors que seul HEAD avait été précisé: c'est car une requête HEAD est une requete GET où seul le header HTTP est renvoyé.
+    Vous vous demandez probablement pourquoi la route acceptait les requêtes de type HEAD, alors que seul GET avait été précisé: c'est car une requête HEAD est une requete GET où seul le header HTTP est renvoyé.
 
 Maintenant vous pouvez soumettre le formulaire qui devrait fonctionner comme espéré, bien qu'il ne fasse rien de particulier pour le moment. La page redirige simplement à nouveau vers le formulaire de contact.
 
