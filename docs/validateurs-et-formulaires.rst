@@ -212,7 +212,7 @@ Créez un nouveau fichier dans ``src/Blogger/BlogBundle/Form/EnquiryType.php`` e
         }
     }
 
-La classe ``EnquiryType`` nous permet de présenter la classe ``FormBuilder``. la classe ``FormBuilder`` est votre meilleur atout lorsqu'il est question de créer des formulaires.
+La classe ``EnquiryType`` nous permet de présenter la classe ``FormBuilder``. La classe ``FormBuilder`` est votre meilleur atout lorsqu'il est question de créer des formulaires.
 Elle est capable de simplifier le processus de définition des champs à partir des métadonnées qu'un champ possède. Comme notre entité est très simple, nous n'avons défini aucune métadonnée donc le ``FormBuilder`` va créer par défaut des champs de texte. C'est adapté à la plupart des champs, sauf pour le corps du message pour lequel nous souhaitons utiliser une ``textarea``, et pour l'adresse email pour laquelle nous allons utiliser le nouveau champ d'adresse email proposé par l'HTML5.
 
 .. note::
