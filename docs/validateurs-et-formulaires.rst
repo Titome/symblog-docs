@@ -401,7 +401,7 @@ Vous pouvez maintenant rafraichir la page de contact, dans laquelle le nouveau s
 .. tip::
 
     Alors que la fonction ``asset`` nous permet d'utiliser les ressources, il y a une meilleure alternative pour cette opération, il s'agit . 
-    `d'Assectic <https://github.com/kriswallsmith/assetic>`_. Cette librairie, écrite par `Kris Wallsmith <https://github.com/kriswallsmith>`_ est fournie par défaut avec la distribution standard de Symfony2. Cette librairie permet une gestion des ressources bien meilleure que celle que propose Symfony2. Assetic permet de lancer des filtres sur les fichiers pour automatiquement combiner ou compresser les fichiers. Elle permet également de lancer des filtres sut les images. Assetic nous permet également de faire référence à des ressources directement à l'intérieur des répertoires publics des bundles, sans avoir à lancer la commande ``assets:install``. Nous reviendrons plus en détail sur ce sujet dans un chapitre ultérieur.
+    `d'Assectic <https://github.com/kriswallsmith/assetic>`_. Cette librairie, écrite par `Kris Wallsmith <https://github.com/kriswallsmith>`_ est fournie par défaut avec la distribution standard de Symfony2. Cette librairie permet une gestion des ressources bien meilleure que celle que propose Symfony2. Assetic permet de lancer des filtres sur les fichiers pour automatiquement combiner ou compresser les fichiers. Elle permet également de lancer des filtres sur les images. Assetic nous permet également de faire référence à des ressources directement à l'intérieur des répertoires publics des bundles, sans avoir à lancer la commande ``assets:install``. Nous reviendrons plus en détail sur ce sujet dans un chapitre ultérieur.
 
 Echec à la soumission
 ---------------------
