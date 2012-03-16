@@ -523,7 +523,7 @@ Swift Mailer propose un certain nombre de méthodes pour envoyer les emails, ent
 
     Faites attention si vous utilisez un système de contrôle de version (SCV) tel que Git pour votre projet, en particulier si votre dépôt est accessible publiquement à n'importe qui. Vous devriez vous assurer que les fichiers qui contiennent des informations sensibles, tel que 
     ``app/parameters.ini``, sont dans la liste des fichier à ignorer. Une approche courante consiste à suffixer le nom de fichier qui a des informations sensibles, tel que ``app/parameters.ini``, avec ``.dist``.
-    Vous pouvez alors proposer des valeurs par défaut pour les paramètres sensibles dans ce fichier, et l'ajouter à votre gestionnaire de version, pendant que le vrai fichier, par exemple ``app/parameters.ini`` est dans la liste de ceux à ignorer. Vous pouvez alors déployer les fichiers  ``*.dist`` avec votre projet et permettre aux développeurs de supprimer l'extension .dist et remmplir les paramètres requis.
+    Vous pouvez alors proposer des valeurs par défaut pour les paramètres sensibles dans ce fichier, et l'ajouter à votre gestionnaire de version, pendant que le vrai fichier, par exemple ``app/parameters.ini`` est dans la liste de ceux à ignorer. Vous pouvez alors déployer les fichiers  ``*.dist`` avec votre projet et permettre aux développeurs de supprimer l'extension .dist et remplir les paramètres requis.
 
 Mise à jour du controlleur.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
