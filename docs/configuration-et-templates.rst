@@ -262,7 +262,7 @@ Nous allons utiliser Twig comme moteur de template pour un certain nombre de rai
 
 1. Twig est rapide - Les templates twig sont compilés en classes PHP, il y a donc très peu de surcharge lors de l'utiliser des templates Twig.
 2. Twig est concis - Twig nous permet de réaliser les fonctionnalités liés au templates en très peu de code. C'est à comparer avec le PHP, qui peut parfois s'avérer très verbeux.
-3. Twig supportes l'héritage de template - Il s'agit d'un de mes préférés. Les templates ont la capacité d'étendre et surcharger d'autres templates, ce qui permet aux templates enfants de remplacer ce qui été proposé par défaut par les parents.
+3. Twig supportes l'héritage de template - Il s'agit d'une de mes préférées. Les templates ont la capacité d'étendre et surcharger d'autres templates, ce qui permet aux templates enfants de remplacer ce qui été proposé par défaut par les parents.
 4. Twig est sûr - Twig échappe par défaut ce qu'il affiche, et propose même un environnement de type ``bac à sable`` pour les templates importés.
 5. Twig est extensible - Twig propose de base un certain nombre de fonctionnalités récurrentes que vous êtes en droit d'attendre d'un moteur de template, mais pour les situations ou vous pourriez avoir des besoins spécifiques, il est facile d'étendre Twig.
 
@@ -397,9 +397,50 @@ Ensuite, il est temps d'ajouter du style. Créez une feuille de style dans ``web
 
 .. code-block:: css
 
-    html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+    html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        margin: 0;
+        padding: 0
+    }
 
-    body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    body {
+        line-height: 1;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+
+    blockquote, q {
+        quotes: none;
+    }
+
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: none;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    body {
+        line-height: 1;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        width: 100%;
+        height: 100%;
+        color: #000;
+        font-size: 14px;
+    }
+
     .clear { clear: both; }
 
     #wrapper { margin: 10px auto; width: 1000px; }
