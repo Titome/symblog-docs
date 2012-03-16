@@ -457,14 +457,11 @@ Commençons par mettre à jour l'entité ``Enquiry`` dans ``src/Blogger/BlogBund
 
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $metadata->addPropertyConstraint('name', new NotBlank());
-
-            $metadata->addPropertyConstraint('email', new Email());
-
-            $metadata->addPropertyConstraint('subject', new NotBlank());
-            $metadata->addPropertyConstraint('subject', new MaxLength(50));
-
-            $metadata->addPropertyConstraint('body', new MinLength(50));
+            $metadata->addPropertyConstraint('name', new NotBlank())
+                     ->addPropertyConstraint('email', new Email())
+                     ->addPropertyConstraint('subject', new NotBlank())
+                     ->addPropertyConstraint('subject', new MaxLength(50))
+                     ->addPropertyConstraint('body', new MinLength(50));
         }
 
         // ..
