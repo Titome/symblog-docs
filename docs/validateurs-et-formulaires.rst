@@ -612,7 +612,7 @@ Afin que l'application Symfony2 puisse utiliser ces nouveaux paramètres, nous d
         # .. existing import here
         - { resource: @BloggerBlogBundle/Resources/config/config.yml }
 
-Le chemin d'import est le chemin physique du fichier sur le disque. La directive ``@BloggerBlogBundle`` va va se rendre au chemin du  ``BloggerBlogBundle``, qui est ``src/Blogger/BlogBundle``.
+Le chemin d'import est le chemin physique du fichier sur le disque. La directive ``@BloggerBlogBundle`` va se rendre au chemin du  ``BloggerBlogBundle``, qui est ``src/Blogger/BlogBundle``.
 
 Nous pouvons enfin mettre à jour l'action de contact, afin de nous servir de ce nouveau paramètre.
 
