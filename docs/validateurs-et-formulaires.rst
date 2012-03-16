@@ -200,10 +200,10 @@ Créez un nouveau fichier dans ``src/Blogger/BlogBundle/Form/EnquiryType.php`` e
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $builder->add('name');
-            $builder->add('email', 'email');
-            $builder->add('subject');
-            $builder->add('body', 'textarea');
+            $builder->add('name')
+                    ->add('email', 'email')
+                    ->add('subject')
+                    ->add('body', 'textarea');
         }
 
         public function getName()
