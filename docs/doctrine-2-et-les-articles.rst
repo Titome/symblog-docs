@@ -10,7 +10,7 @@ Doctrine 2 nous permet de faire persister nos objets PHP. Il propose également 
 Doctrine 2: Le modèle
 ---------------------
 
-Afin que notre blog fonction, il nous faut un moyen de faire persister les données. Doctrine 2 fournit une librairie d'ORM conçue exactement dans cette optique. Doctrine 2 est conçu par dessus une très puissante
+Afin que notre blog fonctionne, il nous faut un moyen de faire persister les données. Doctrine 2 fournit une librairie d'ORM conçue exactement dans cette optique. Doctrine 2 est conçu par dessus une très puissante
 `couche d'abstraction de base de donnée <http://www.doctrine-project.org/projects/dbal>`_ qui la rend indépendante de la base de donnée utilisée : cela permet d'utiliser différents moteurs de stockage tels que MySQL, PostgreSQL ou SQLite. Nous allons utiliser MySQL dans ce tutorial, mais n'importe quel moteur peut être utilisé à la place.
 
 .. tip::
