@@ -21,7 +21,7 @@ Afin que notre blog fonctionne, il nous faut un moyen de faire persister les don
 
     "Un mapping objet-relationnel (en anglais object-relational mapping ou ORM) est une technique de programmation informatique qui crée l'illusion d'une base de données orientée objet à partir d'une base de données relationnelle en définissant des correspondances entre cette base de données et les objets du langage utilisé. On pourrait le désigner par `` correspondance entre monde objet et monde relationnel ``"
     
-	Ce qu'un ORM facilite, c'est la traduction des données d'une base de donnée relationnelle en des objets PHP que l'on peut manipuler. Cela permet d'encapsuler des opérations que l'on souhaite réaliser sur une table à l'intérieur d'une classe. Prenons l'exemple d'une table pour les utilisateurs. Elle contiendra probablement des champs tels que le nom d'utilisateur, son mot de passe, son nom et sa date de naissance. L'orm va nous permettre, dans la classe PHP, d'appeller des méthodes ``getUsername()`` 
+	Ce qu'un ORM facilite, c'est la traduction des données d'une base de donnée relationnelle en des objets PHP que l'on peut manipuler. Cela permet d'encapsuler des opérations que l'on souhaite réaliser sur une table à l'intérieur d'une classe. Prenons l'exemple d'une table pour les utilisateurs. Elle contiendra probablement des champs tels que le nom d'utilisateur, son mot de passe, son nom et sa date de naissance. L'ORM va nous permettre, dans la classe PHP, d'appeller des méthodes ``getUsername()`` 
 	ou ``setPassword()``. Les ORM vont bien plus loin que cela néanmoins, elles permettent de retrouver des entités liées pour nous, soit au moment où l'on charge l'entité utilisateur, soit de manière paresseuse par la suite. Maintenant imaginons que notre utilisateur a des amis qui lui sont liés. Il peut y avoir une table d'amis, où est stockée la clée primaire de la table utilisateur. L'ORM nous permet d'utiliser une méthode telle que ``$user->getFriends()`` pour récupérer les objets de la table d'amis. Si cela ne suffit pas, l'ORM se charge également de la persistance, ce qui nous permet de créer des objets PHP, d'appeler une méthode de sauvegarde (du genre ``save()``), et de laisser l'ORM s'occuper des détails pour la sauvegarde dans la base de données. Comme nous allons utiliser Doctrine 2 comme librairie d'ORM, vous allez devenir plus à l'aise avec cette notion au cours de ce tutoriel.
 
 .. note::
@@ -387,16 +387,15 @@ Comme vous l'attendiez, nous commençons par étendre le template principale du 
 CSS
 ...
 
-Afin que la page d'affichage des articles soit agréable au regarde, il faut lui ajouter du style. Mettez à jour la feuille de style dans ``src/Blogger/BlogBundle/Resouces/public/css/blog.css`` avec le contenu suivant :
+Afin que la page d'affichage des articles soit agréable au regard, il faut lui ajouter du style. Mettez à jour la feuille de style dans ``src/Blogger/BlogBundle/Resouces/public/css/blog.css`` avec le contenu suivant :
 
 .. code-block:: css
 
     .date { margin-bottom: 20px; border-bottom: 1px solid #ccc; font-size: 24px; color: #666; line-height: 30px }
     .blog { margin-bottom: 20px; }
     .blog img { width: 190px; float: left; padding: 5px; border: 1px solid #ccc; margin: 0 10px 10px 0; }
-    .blog .meta { clear: left; margin-bottom: 20px; }
+    .blog .meta { clear: left; margin-bottom: 20px; font-style: italic; font-size: 12px; color: #666;}
     .blog .snippet p.continue { margin-bottom: 0; text-align: right; }
-    .blog .meta { font-style: italic; font-size: 12px; color: #666; }
     .blog .meta p { margin-bottom: 5px; line-height: 1.2em; }
     .blog img.large { width: 300px; min-height: 165px; }
 
@@ -492,11 +491,12 @@ Nous sommes maintenant prêts à définir du contenu factice pour nos articles. 
     namespace Blogger\BlogBundle\DataFixtures\ORM;
     
     use Doctrine\Common\DataFixtures\FixtureInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Blog;
     
     class BlogFixtures implements FixtureInterface
     {
-        public function load($manager)
+        public function load(ObjectManager $manager)
         {
             $blog1 = new Blog();
             $blog1->setTitle('A day with Symfony2');
