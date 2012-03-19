@@ -408,7 +408,7 @@ Afin que la page d'affichage des articles soit agréable au regard, il faut lui 
         $ php app/console assets:install web
 
 
-Comme nous avons maintenant construit le controlleur et la vue pour l'action ``show``, allons jeter un oeil à la page que nous venos de créer. Rendez vous avec votre navigateur à l'adresse ``http://symblog.dev/app_dev.php/1``. Ce n'est probablement pas la page que vous attendiez...
+Comme nous avons maintenant construit le controlleur et la vue pour l'action ``show``, allons jeter un oeil à la page que nous venons de créer. Rendez vous avec votre navigateur à l'adresse ``http://symblog.dev/app_dev.php/1``. Ce n'est probablement pas la page que vous attendiez...
 
 .. image:: /_static/images/part_3/404_not_found.jpg
     :align: center
