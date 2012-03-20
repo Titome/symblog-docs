@@ -792,7 +792,7 @@ Comme vous pouvez le voir, on traverse la collection d'entité ``Comment`` et af
 CSS d'affichage des commentaires
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ajoutons également un peu de CSS pour que les commentaires soient agréables à regarder. Mettez à jour la feuille de style dans ``src/Blogger/BlogBundle/Resorces/public/css/blog.css`` en y ajoutant ce qui suit :
+Ajoutons également un peu de CSS pour que les commentaires soient agréables à regarder. Mettez à jour la feuille de style dans ``src/Blogger/BlogBundle/Resources/public/css/blog.css`` en y ajoutant ce qui suit :
 
 .. code-block:: css
 
