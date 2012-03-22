@@ -208,7 +208,7 @@ Cette action est très simple, elle utilise les 2 nouvelles méthodes du ``BlogR
 
     {# src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig #}
     
-    <section class="section">
+    <section class="sidebar">
         <header>
             <h3>Tag Cloud</h3>
         </header>
